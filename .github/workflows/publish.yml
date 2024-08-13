@@ -30,9 +30,10 @@ jobs:
           static_site_generator: next
 
       - name: Build with Next.js 🏗️
-        run: |
-          npx next build
-          npx next export -o out
+        run: npx next build
+
+      - name: Export with Next.js 📦
+        run: npx next export
     
       - name: List root directory contents
         run: ls -la
