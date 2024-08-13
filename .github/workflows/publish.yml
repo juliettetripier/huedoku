@@ -32,10 +32,13 @@ jobs:
       - name: Build with Next.js 🏗️
         run: npx next build
 
+      - name: List directory contents
+        run: ls -la out
+
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
         with:
-          path: out
+          path: ./out
 
   deploy:
     environment:
