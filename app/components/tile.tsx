@@ -9,6 +9,18 @@ import {
     PopoverCloseButton,
     PopoverAnchor,
   } from '@chakra-ui/react'
+import { ColorOption } from './coloroption';
+
+function generateColorOptions() {
+    const colorOptions = [];
+    const numOptions = 9;
+
+    for (let i = 0; i < numOptions; i++) {
+        colorOptions.push(<ColorOption />);
+    }
+
+    return colorOptions;
+}
 
 export function Tile() {
     return <Popover>
@@ -21,7 +33,11 @@ export function Tile() {
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverHeader>Header</PopoverHeader>
-                <PopoverBody>Body</PopoverBody>
+                <PopoverBody style={{display: 'flex'}}>
+                    <div className="color-option-grid">
+                        {generateColorOptions()}
+                    </div>
+                </PopoverBody>
             </PopoverContent>
         </Popover>;
 }
