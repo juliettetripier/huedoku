@@ -33,6 +33,7 @@ export default function Board() {
     useEffect(() => {
         setPalette(generateColorPalette())
     }, []);
+    
     return (
         <Grid>
             {generateTiles(palette)}
