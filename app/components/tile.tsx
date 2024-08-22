@@ -14,7 +14,9 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { ColorOption } from './coloroption';
 
 type TileProps = {
+    tileIndex: number;
     palette: Array<string>;
+    board: Array<number>;
 }
 
 function changeTileColor(setColor: Dispatch<SetStateAction<string>>, 
@@ -41,13 +43,15 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
 }
 
 export function Tile(props: TileProps) {
+    const { tileIndex, palette, board } = props;
     const [color, setColor] = useState<string>('transparent');
     const { isOpen, onOpen, onClose } = useDisclosure();
+    console.log(tileIndex);
 
     return <Popover isOpen={isOpen} onClose={onClose}>
             <PopoverTrigger>
                 <div className="tile" style={{ backgroundColor: color }} onClick={onOpen}>
-                    <h1>Test</h1>
+                    <h1>{board[tileIndex]}</h1>
                 </div>
             </PopoverTrigger>
             <PopoverContent>

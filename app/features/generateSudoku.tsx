@@ -13,16 +13,6 @@ const initialBoard = [
 // Create a shallow copy of initialBoard
 let sudokuBoard = initialBoard.map(row => [...row]);
 
-// Checks if board is full
-function isBoardFull(board: Array<Array<number>>) {
-    for (let row of board) {
-        if (row.includes(0)) {
-            return false;
-        }
-    }
-    return true;
-}
-
 // Checks if the value is valid (not present in row, column, or square)
 function valueIsValid(board: Array<Array<number>>, row: number, col: number, value: number): boolean {
     // Check if value is in row or column
@@ -63,7 +53,7 @@ function shuffleValues(values: Array<number>) {
 }
 
 // Recursively fill the board
-function fillBoard(board: Array<Array<number>>) {
+export function fillBoard(board: Array<Array<number>>) {
     // Find first empty tile
     for (let i = 0; i < 81; i++) {
         const row = Math.floor(i/9);
@@ -88,8 +78,6 @@ function fillBoard(board: Array<Array<number>>) {
             return false;
         }
     }
+    // If there are no blank tiles remaining
     return true;
 }
-
-const finalBoard = fillBoard(sudokuBoard);
-console.log(sudokuBoard);

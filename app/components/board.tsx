@@ -4,18 +4,42 @@ import { ReactNode, useState, useEffect } from "react";
 import React from "react";
 import { Tile } from "./tile";
 import generateColorPalette from "../features/generateColorPalette";
+import { fillBoard } from "../features/generateSudoku"
 
 interface GridProps {
     children: ReactNode;
   }
 
+function generateBoard() {
+    const initialBoard = [
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0] 
+        ];
+    // Create a shallow copy of initialBoard
+    let sudokuBoard = initialBoard.map(row => [...row]);
+    // Fill sudokuBoard
+    fillBoard(sudokuBoard);
+    // Flatten sudokuBoard so you can easily use the tile's
+    // key to index it
+    const flattenedBoard = sudokuBoard.flat();
+    return flattenedBoard;
+}
+
 function generateTiles(generatedPalette: Array<string>) {
     const tiles = [];
     const numTiles = 81;
     const palette = generatedPalette;
+    let board = generateBoard();
 
     for (let i = 0; i < numTiles; i++) {
-        tiles.push(<Tile key={i} palette={palette}/>);
+        tiles.push(<Tile key={i} tileIndex={i} palette={palette} board={board}/>);
     }
 
     return tiles;
