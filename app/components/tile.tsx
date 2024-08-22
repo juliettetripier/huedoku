@@ -17,7 +17,8 @@ type TileProps = {
     palette: Array<string>;
 }
 
-function changeTileColor(setColor: Dispatch<SetStateAction<string>>, color: string, onClose: () => void) {
+function changeTileColor(setColor: Dispatch<SetStateAction<string>>, 
+        color: string, onClose: () => void) {
     setColor(color);
     onClose();
 }
@@ -32,7 +33,8 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
             <ColorOption 
                 key={i} 
                 color={colorPalette[i]} 
-                onColorSelection={() => changeTileColor(setColor, colorPalette[i], onClose)}/>);
+                onColorSelection={() => 
+                    changeTileColor(setColor, colorPalette[i], onClose)}/>);
         }
 
     return colorOptions;

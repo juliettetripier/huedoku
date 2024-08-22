@@ -15,7 +15,7 @@ function generateTiles(generatedPalette: Array<string>) {
     const palette = generatedPalette;
 
     for (let i = 0; i < numTiles; i++) {
-        tiles.push(<Tile palette={palette}/>);
+        tiles.push(<Tile key={i} palette={palette}/>);
     }
 
     return tiles;
@@ -33,7 +33,7 @@ export default function Board() {
     useEffect(() => {
         setPalette(generateColorPalette())
     }, []);
-    
+
     return (
         <Grid>
             {generateTiles(palette)}
