@@ -5,6 +5,7 @@ import React from "react";
 import { Tile } from "./tile";
 import generateColorPalette from "../features/generateColorPalette";
 import { fillBoard } from "../features/generateSudoku"
+import { countSolutions, removeTiles } from "../features/generateSudokuForUser";
 
 interface GridProps {
     children: ReactNode;
@@ -26,9 +27,13 @@ function generateBoard() {
     let sudokuBoard = initialBoard.map(row => [...row]);
     // Fill sudokuBoard
     fillBoard(sudokuBoard);
-    // Flatten sudokuBoard so you can easily use the tile's
+    // Remove tiles
+    const boardForUser = removeTiles(sudokuBoard);
+    console.log('TESTING');
+    console.log(countSolutions(boardForUser));
+    // Flatten board so you can easily use the tile's
     // key to index it
-    const flattenedBoard = sudokuBoard.flat();
+    const flattenedBoard = boardForUser.flat();
     return flattenedBoard;
 }
 

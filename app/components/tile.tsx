@@ -46,7 +46,6 @@ export function Tile(props: TileProps) {
     const { tileIndex, palette, board } = props;
     const [color, setColor] = useState<string>('transparent');
     const { isOpen, onOpen, onClose } = useDisclosure();
-    console.log(tileIndex);
 
     return <Popover isOpen={isOpen} onClose={onClose}>
             <PopoverTrigger>
