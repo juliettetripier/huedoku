@@ -14,7 +14,7 @@ const initialBoard = [
 let sudokuBoard = initialBoard.map(row => [...row]);
 
 // Checks if the value is valid (not present in row, column, or square)
-function valueIsValid(board: Array<Array<number>>, row: number, col: number, value: number): boolean {
+export function valueIsValid(board: Array<Array<number>>, row: number, col: number, value: number): boolean {
     // Check if value is in row or column
     for (let i = 0; i < 9; i++) {
         // Check if value in row
