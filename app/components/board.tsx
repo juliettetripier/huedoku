@@ -63,6 +63,8 @@ export default function Board() {
         setPalette(generateColorPalette())
     }, []);
 
+    console.log(palette);
+
     return (
         <Grid>
             {generateTiles(palette)}
