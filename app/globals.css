@@ -46,6 +46,9 @@ body {
   border-radius: 8px;
   width: 80px;
   height: 80px;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
 }
 
 .color-option-grid {

@@ -29,8 +29,6 @@ function generateBoard() {
     fillBoard(sudokuBoard);
     // Remove tiles
     const boardForUser = removeTiles(sudokuBoard);
-    console.log('TESTING');
-    console.log(countSolutions(boardForUser));
     // Flatten board so you can easily use the tile's
     // key to index it
     const flattenedBoard = boardForUser.flat();
@@ -62,8 +60,6 @@ export default function Board() {
     useEffect(() => {
         setPalette(generateColorPalette())
     }, []);
-
-    console.log(palette);
 
     return (
         <Grid>

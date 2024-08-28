@@ -1,32 +1,5 @@
 import { valueIsValid } from "./generateSudoku";
 
-// function valueIsValid(board: Array<Array<number>>, row: number, col: number, value: number): boolean {
-//     // Check if value is in row or column
-//     for (let i = 0; i < 9; i++) {
-//         // Check if value in row
-//         if (board[row][i] == value) {
-//             return false;
-//         };
-//         // Check if value in column
-//         if (board[i][col] == value) {
-//             return false;
-//         };
-//     };
-//     // Check if value is in 3x3 square
-//     const squareStartRow = Math.floor(row / 3) * 3;
-//     const squareStartCol = Math.floor(col / 3) * 3;
-//     // Iterate over each row
-//     for (let i = 0; i < 3; i++) {
-//         // Iterate over each column in row
-//         for (let j = 0; j < 3; j++) {
-//             if (board[squareStartRow + i][squareStartCol + j] == value) {
-//                 return false;
-//             };
-//         };
-//     };
-//     return true;
-// }
-
 function isBoardFull(board: Array<Array<number>>) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
@@ -70,7 +43,7 @@ export function countSolutions(board: Array<Array<number>>, solutions: number = 
 }
 
 export function removeTiles(board: Array<Array<number>>, emptyTiles: number = 0): Array<Array<number>> {
-    const targetEmptyTiles = 10;
+    const targetEmptyTiles = 17;
     if (emptyTiles >= targetEmptyTiles) {
         return board;
     }

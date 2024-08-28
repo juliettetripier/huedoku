@@ -10,7 +10,7 @@ import {
     PopoverAnchor,
     useDisclosure,
   } from '@chakra-ui/react'
-import { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
 
 type TileProps = {
@@ -52,6 +52,7 @@ export function Tile(props: TileProps) {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     useEffect(() => {
+        // Set the initial color for each tile
         const initialColorDict: InitialColorDict = {
             0: 'transparent',
             1: palette[0],
@@ -66,6 +67,8 @@ export function Tile(props: TileProps) {
         }
         const initialColor: string = initialColorDict[board[tileIndex]];
         setColor(initialColor);
+        // Mark the tiles the user can interact with
+        
     }, [palette, board, tileIndex]);
 
     return <Popover isOpen={isOpen} onClose={onClose}>
