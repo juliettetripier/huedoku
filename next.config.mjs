@@ -2,6 +2,9 @@
 const nextConfig = {
     basePath: "/huedoku",
     output: "export",
+    images: {
+        unoptimized: true
+    },
     reactStrictMode: true,
 };
 
