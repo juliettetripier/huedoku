@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ChakraProvider } from '@chakra-ui/react'
 import Board from "./components/board";
+import "./globals.css";
 
 export default function Home() {
   return (
