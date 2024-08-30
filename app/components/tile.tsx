@@ -10,7 +10,7 @@ import {
     PopoverAnchor,
     useDisclosure,
   } from '@chakra-ui/react'
-import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { ColorOption } from './coloroption';
 import { updateBoard } from '../features/submitSolution';
 
