@@ -5,7 +5,8 @@ import React from "react";
 import { Tile } from "./tile";
 import generateColorPalette from "../features/generateColorPalette";
 import { fillBoard } from "../features/generateSudoku"
-import { countSolutions, removeTiles } from "../features/generateSudokuForUser";
+import { removeTiles } from "../features/generateSudokuForUser";
+import { checkIfSubmittable } from "../features/submitSolution";
 
 interface GridProps {
     children: ReactNode;
@@ -35,19 +36,6 @@ function generateBoard() {
     return flattenedBoard;
 }
 
-function generateTiles(generatedPalette: Array<string>) {
-    const tiles = [];
-    const numTiles = 81;
-    const palette = generatedPalette;
-    let board = generateBoard();
-
-    for (let i = 0; i < numTiles; i++) {
-        tiles.push(<Tile key={i} tileIndex={i} palette={palette} board={board}/>);
-    }
-
-    return tiles;
-}
-
 function Grid({ children }: GridProps) {
     return <div className="main-grid">
         {children}
@@ -56,10 +44,27 @@ function Grid({ children }: GridProps) {
 
 export default function Board() {
     const [palette, setPalette] = useState<string[]>([]);
+    const [board, setBoard] = useState(generateBoard());
 
     useEffect(() => {
         setPalette(generateColorPalette())
     }, []);
+
+    useEffect(() => {
+        checkIfSubmittable(board);
+    }, [board]);
+
+    function generateTiles(generatedPalette: Array<string>) {
+        const tiles = [];
+        const numTiles = 81;
+        const palette = generatedPalette;
+    
+        for (let i = 0; i < numTiles; i++) {
+            tiles.push(<Tile key={i} tileIndex={i} palette={palette} board={board} setBoard={setBoard}/>);
+        }
+    
+        return tiles;
+    }
 
     return (
         <Grid>

@@ -12,11 +12,13 @@ import {
   } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
+import { updateBoard } from '../features/submitSolution';
 
-type TileProps = {
+export type TileProps = {
     tileIndex: number;
     palette: Array<string>;
     board: Array<number>;
+    setBoard: Dispatch<SetStateAction<Array<number>>>;
 }
 
 interface InitialColorDict {
@@ -24,12 +26,13 @@ interface InitialColorDict {
 }
 
 function changeTileColor(setColor: Dispatch<SetStateAction<string>>, 
-        color: string, onClose: () => void) {
-    setColor(color);
-    onClose();
-}
+    color: string, onClose: () => void) {
+        setColor(color);
+        onClose();
+    }
 
-function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateAction<string>>, onClose: () => void) {
+function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateAction<string>>, 
+    onClose: () => void) {
     const colorOptions = [];
     const colorPalette = props.palette;
     const numOptions = 9;
@@ -39,9 +42,14 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
             <ColorOption 
                 key={i} 
                 color={colorPalette[i]} 
-                onColorSelection={() => 
-                    changeTileColor(setColor, colorPalette[i], onClose)}/>);
-        }
+                onColorSelection={() => {
+                    updateBoard(props, i+1);
+                    console.log('board is updated');
+                    changeTileColor(setColor, colorPalette[i], onClose);
+                }}
+            />
+        );
+    }
 
     return colorOptions;
 }
