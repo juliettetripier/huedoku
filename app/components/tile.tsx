@@ -44,7 +44,6 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
                 color={colorPalette[i]} 
                 onColorSelection={() => {
                     updateBoard(props, i+1);
-                    console.log('board is updated');
                     changeTileColor(setColor, colorPalette[i], onClose);
                 }}
             />
