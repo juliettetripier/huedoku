@@ -10,7 +10,7 @@ import {
     PopoverAnchor,
     useDisclosure,
   } from '@chakra-ui/react'
-import { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
 import { updateBoard } from '../features/submitSolution';
 
@@ -57,6 +57,9 @@ export function Tile(props: TileProps) {
     const { tileIndex, palette, board } = props;
     const [color, setColor] = useState<string>('transparent');
     const { isOpen, onOpen, onClose } = useDisclosure();
+    // variables for setting tiles as interactable vs. fixed
+    const [isInteractable, setIsInteractable] = useState<boolean>(true);
+    const isInitialized = useRef(false);
 
     useEffect(() => {
         // Set the initial color for each tile
@@ -74,13 +77,24 @@ export function Tile(props: TileProps) {
         }
         const initialColor: string = initialColorDict[board[tileIndex]];
         setColor(initialColor);
-        // Mark the tiles the user can interact with
-        
+
+        // Set whether or not tile is interactable
+        // Use isInitialized to make sure this only happens on first render
+        if (!isInitialized.current) {
+            if (board[tileIndex] != 0) {
+                setIsInteractable(false);
+            }
+            isInitialized.current = true;
+        }
     }, [palette, board, tileIndex]);
 
     return <Popover isOpen={isOpen} onClose={onClose}>
             <PopoverTrigger>
-                <div className="tile" style={{ backgroundColor: color }} onClick={onOpen}>
+                <div 
+                    className='tile' 
+                    style={{ backgroundColor: color }} 
+                    onClick={isInteractable ? onOpen : undefined}
+                >
                 </div>
             </PopoverTrigger>
             <PopoverContent>

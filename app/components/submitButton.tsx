@@ -37,6 +37,9 @@ export function SubmitButton({ board }: { board: Array<number> }) {
         setIsSubmittable(isBoardFull(board));
     }, [board]);
 
+    const modalStyle = modalData === "valid" ? { borderTop: '.375rem solid #4c8c2b' }
+        : { borderTop: '.375rem solid #c8102e' }
+
     return (
         <>
             <button className="submit-button"
@@ -47,11 +50,10 @@ export function SubmitButton({ board }: { board: Array<number> }) {
             </button>
             <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent style={modalStyle}>
                     <ModalHeader>
                         {modalData === "valid" ? "Success!" : "Try Again"}
                     </ModalHeader>
-                    <ModalCloseButton />
                     <ModalBody>
                         {modalData === "valid" ? "You won!" : "Your solution is invalid."}
                     </ModalBody>
