@@ -10,6 +10,7 @@ import {
     PopoverAnchor,
     useDisclosure,
   } from '@chakra-ui/react'
+import React from 'react';
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
 import { updateBoard } from '../features/submitSolution';
@@ -91,10 +92,16 @@ export function Tile(props: TileProps) {
     return <Popover isOpen={isOpen} onClose={onClose}>
             <PopoverTrigger>
                 <div 
-                    className='tile' 
+                    className={isInteractable ? 'tile tile-interactable' : 'tile tile-fixed'} 
                     style={{ backgroundColor: color }} 
                     onClick={isInteractable ? onOpen : undefined}
+                    tabIndex={isInteractable ? 0 : undefined}
                 >
+                    <div 
+                        className='tile-corner'
+                        style={{ display: isInteractable ? 'block' : 'none' }}
+                    >    
+                    </div>
                 </div>
             </PopoverTrigger>
             <PopoverContent>
