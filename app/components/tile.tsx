@@ -54,6 +54,12 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
     return colorOptions;
 }
 
+function resetTile(props: TileProps, setColor: Dispatch<SetStateAction<string>>,
+    onClose: () => void) {
+    updateBoard(props, 0);
+    changeTileColor(setColor, 'transparent', onClose);
+}
+
 export function Tile(props: TileProps) {
     const { tileIndex, palette, board } = props;
     const [color, setColor] = useState<string>('transparent');
@@ -111,6 +117,14 @@ export function Tile(props: TileProps) {
                 <PopoverBody style={{display: 'flex'}}>
                     <div className="color-option-grid">
                         {generateColorOptions(props, setColor, onClose)}
+                    </div>
+                    <div className="reset-tile-div">
+                        <button 
+                            className="reset-tile-button"
+                            onClick = {() => resetTile(props, setColor, onClose)}
+                        >
+                            Reset
+                        </button>
                     </div>
                 </PopoverBody>
             </PopoverContent>
