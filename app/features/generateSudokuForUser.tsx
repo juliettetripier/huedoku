@@ -43,7 +43,7 @@ export function countSolutions(board: Array<Array<number>>, solutions: number = 
 }
 
 export function removeTiles(board: Array<Array<number>>, emptyTiles: number = 0): Array<Array<number>> {
-    const targetEmptyTiles = 17;
+    const targetEmptyTiles = 19;
     if (emptyTiles >= targetEmptyTiles) {
         return board;
     }

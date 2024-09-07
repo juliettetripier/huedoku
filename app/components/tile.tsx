@@ -4,10 +4,8 @@ import {
     PopoverContent,
     PopoverHeader,
     PopoverBody,
-    PopoverFooter,
     PopoverArrow,
     PopoverCloseButton,
-    PopoverAnchor,
     useDisclosure,
   } from '@chakra-ui/react'
 import React from 'react';
@@ -26,11 +24,20 @@ interface InitialColorDict {
     [key: number]: string;
 }
 
+
 function changeTileColor(setColor: Dispatch<SetStateAction<string>>, 
     color: string, onClose: () => void) {
         setColor(color);
         onClose();
     }
+
+
+function resetTile(props: TileProps, setColor: Dispatch<SetStateAction<string>>,
+        onClose: () => void) {
+        updateBoard(props, 0);
+        changeTileColor(setColor, 'transparent', onClose);
+    }
+
 
 function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateAction<string>>, 
     onClose: () => void) {
@@ -54,11 +61,6 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
     return colorOptions;
 }
 
-function resetTile(props: TileProps, setColor: Dispatch<SetStateAction<string>>,
-    onClose: () => void) {
-    updateBoard(props, 0);
-    changeTileColor(setColor, 'transparent', onClose);
-}
 
 export function Tile(props: TileProps) {
     const { tileIndex, palette, board } = props;
