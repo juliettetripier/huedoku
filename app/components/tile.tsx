@@ -1,13 +1,6 @@
-import {
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    PopoverHeader,
-    PopoverBody,
-    PopoverArrow,
-    PopoverCloseButton,
-    useDisclosure,
-  } from '@chakra-ui/react'
+import { Popover, Text, Button } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
 import React from 'react';
 import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
@@ -65,9 +58,9 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
 export function Tile(props: TileProps) {
     const { tileIndex, palette, board } = props;
     const [color, setColor] = useState<string>('transparent');
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [opened, { open, close }] = useDisclosure(false);
     // variables for setting tiles as interactable vs. fixed
-    const [isInteractable, setIsInteractable] = useState<boolean>(true);
+    const [isInteractable, setIsInteractable] = useState<boolean>(false);
     const isInitialized = useRef(false);
 
     useEffect(() => {
@@ -90,19 +83,22 @@ export function Tile(props: TileProps) {
         // Set whether or not tile is interactable
         // Use isInitialized to make sure this only happens on first render
         if (!isInitialized.current) {
-            if (board[tileIndex] != 0) {
-                setIsInteractable(false);
+            if (board[tileIndex] == 0) {
+                setIsInteractable(true);
             }
             isInitialized.current = true;
         }
     }, [palette, board, tileIndex]);
 
-    return <Popover isOpen={isOpen} onClose={onClose}>
-            <PopoverTrigger>
+    return (
+        <Popover width={200} position="bottom" withArrow shadow="md" opened={opened} onClose={close}>
+            <Popover.Target>
                 <div 
-                    className={isInteractable ? 'tile tile-interactable' : 'tile tile-fixed'} 
+                    className={
+                        isInteractable ? 'tile tile-interactable' : 'tile tile-fixed no-transition'
+                    } 
                     style={{ backgroundColor: color }} 
-                    onClick={isInteractable ? onOpen : undefined}
+                    onClick={isInteractable ? open : undefined}
                     tabIndex={isInteractable ? 0 : undefined}
                 >
                     <div 
@@ -111,24 +107,21 @@ export function Tile(props: TileProps) {
                     >    
                     </div>
                 </div>
-            </PopoverTrigger>
-            <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>Color Picker</PopoverHeader>
-                <PopoverBody style={{display: 'flex'}}>
-                    <div className="color-option-grid">
-                        {generateColorOptions(props, setColor, onClose)}
-                    </div>
-                    <div className="reset-tile-div">
-                        <button 
-                            className="reset-tile-button"
-                            onClick = {() => resetTile(props, setColor, onClose)}
-                        >
-                            Reset
-                        </button>
-                    </div>
-                </PopoverBody>
-            </PopoverContent>
-        </Popover>;
+            </Popover.Target>
+            <Popover.Dropdown>
+                <div className="color-option-grid">
+                    {generateColorOptions(props, setColor, close)}
+                </div>
+                <div className="reset-tile-div">
+                    <button 
+                        className="reset-tile-button"
+                        onClick = {() => resetTile(props, setColor, close)}
+                    >
+                        Reset
+                    </button>
+                </div>
+            </Popover.Dropdown>
+        </Popover>
+      );
+    
 }

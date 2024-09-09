@@ -1,6 +1,5 @@
 "use client";
 
-import { ChakraProvider } from '@chakra-ui/react'
 import Board from "./components/board";
 import "./globals.css";
 import { useState } from "react";
@@ -36,21 +35,19 @@ export default function Home() {
   const [board, setBoard] = useState(generateBoard());
 
   return (
-    <ChakraProvider>
-      <main className="flex min-h-screen flex-col items-center justify-between">
-        <div className="header">
-          <h1>Huedoku</h1>
-          <div className="difficulty-div">
-            <button className="difficulty-button" id="easy">Easy</button>
-            <button className="difficulty-button" id="medium">Medium</button>
-            <button className="difficulty-button" id="hard">Hard</button>
-          </div>
-          <SubmitButton board={board} />
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="header">
+        <h1>Huedoku</h1>
+        <div className="difficulty-div">
+          <button className="difficulty-button" id="easy">Easy</button>
+          <button className="difficulty-button" id="medium">Medium</button>
+          <button className="difficulty-button" id="hard">Hard</button>
         </div>
-        <div>
-          <Board board={board} setBoard={setBoard} />
-        </div>
-      </main>
-    </ChakraProvider>
+        <SubmitButton board={board} />
+      </div>
+      <div>
+        <Board board={board} setBoard={setBoard} />
+      </div>
+    </main>
   );
 }

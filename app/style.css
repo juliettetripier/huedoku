@@ -27,9 +27,13 @@ main {
     border-radius: 8px;
     width: 70px;
     height: 70px;
-    -webkit-transition: background-color 500ms linear;
-    -ms-transition: background-color 500ms linear;
-    transition: background-color 500ms linear;
+    -webkit-transition: background-color 400ms linear;
+    -ms-transition: background-color 400ms linear;
+    transition: background-color 400ms linear;
+  }
+
+  .no-transition {
+    transition: none;
   }
 
   .tile-interactable {
@@ -41,6 +45,7 @@ main {
   }
 
   .tile-corner {
+    display: none;
     width: 0;
     height: 0;
     border-style: solid;
