@@ -27,9 +27,9 @@ main {
     border-radius: 8px;
     width: 70px;
     height: 70px;
-    -webkit-transition: background-color 400ms linear;
-    -ms-transition: background-color 400ms linear;
-    transition: background-color 400ms linear;
+    -webkit-transition: background-color 300ms linear;
+    -ms-transition: background-color 300ms linear;
+    transition: background-color 300ms linear;
   }
 
   .no-transition {

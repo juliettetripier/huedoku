@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
-import {
-    useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-  } from '@chakra-ui/react'
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Button } from "@mantine/core";
 import { isBoardFull, solutionIsValid } from "../features/submitSolution";
 
 function handleSubmission(board: Array<number>, 
@@ -30,6 +22,7 @@ function handleSubmission(board: Array<number>,
 
 export function SubmitButton({ board }: { board: Array<number> }) {
     const [isSubmittable, setIsSubmittable] = useState(false);
+    const [opened, { open, close }] = useDisclosure(false);
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState("");
 
@@ -48,22 +41,21 @@ export function SubmitButton({ board }: { board: Array<number> }) {
             >
             Submit
             </button>
-            <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-                <ModalOverlay />
-                <ModalContent style={modalStyle}>
-                    <ModalHeader>
-                        {modalData === "valid" ? "Success!" : "Try Again"}
-                    </ModalHeader>
-                    <ModalBody>
+            <Modal.Root opened={isModalOpen} onClose={() => setModalOpen(false)}>
+                <Modal.Overlay>
+                <Modal.Content>
+                    <Modal.Header style={modalStyle}>
+                        <Modal.Title>
+                            {modalData === "valid" ? "Success!" : "Try Again"}
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
                         {modalData === "valid" ? "You won!" : "Your solution is invalid."}
-                    </ModalBody>
-
-                    <ModalFooter>
-                        <button onClick={() => setModalOpen(false)}>Ok</button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+                        <Button onClick={() => setModalOpen(false)}>Ok</Button>
+                    </Modal.Body>
+                </Modal.Content>
+                </Modal.Overlay>
+            </Modal.Root>
         </>
-
     )
 }
