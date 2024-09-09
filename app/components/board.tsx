@@ -16,9 +16,13 @@ function Grid({ children }: GridProps) {
     </div>;
 }
 
-export default function Board({ board, setBoard, palette }: {board: Array<number>, 
-    setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
-    palette: Array<string> }) {
+export default function Board({ board, setBoard }: {board: Array<number>, 
+    setBoard: React.Dispatch<React.SetStateAction<Array<number>>> }) {
+    const [palette, setPalette] = useState<string[]>([]);
+
+    useEffect(() => {
+        setPalette(generateColorPalette())
+    }, []);
 
     useEffect(() => {
         checkIfSubmittable(board);

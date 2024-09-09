@@ -1,14 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { ChakraProvider } from '@chakra-ui/react'
 import Board from "./components/board";
 import "./globals.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { fillBoard } from "./features/generateSudoku";
 import { removeTiles } from "./features/generateSudokuForUser";
 import { SubmitButton } from "./components/submitButton";
-import generateColorPalette from "./features/generateColorPalette";
 
 function generateBoard() {
   const initialBoard = [
@@ -36,7 +34,6 @@ function generateBoard() {
 
 export default function Home() {
   const [board, setBoard] = useState(generateBoard());
-  const [palette, setPalette] = useState<string[]>(generateColorPalette());
 
   return (
     <ChakraProvider>
@@ -51,7 +48,7 @@ export default function Home() {
           <SubmitButton board={board} />
         </div>
         <div>
-          <Board board={board} setBoard={setBoard} palette={palette} />
+          <Board board={board} setBoard={setBoard} />
         </div>
       </main>
     </ChakraProvider>
