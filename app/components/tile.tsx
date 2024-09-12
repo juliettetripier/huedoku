@@ -11,6 +11,7 @@ export type TileProps = {
     palette: Array<string>;
     board: Array<number>;
     setBoard: Dispatch<SetStateAction<Array<number>>>;
+    startingBoard: Array<number>;
 }
 
 interface InitialColorDict {
@@ -56,12 +57,10 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
 
 
 export function Tile(props: TileProps) {
-    const { tileIndex, palette, board } = props;
+    const { tileIndex, palette, startingBoard, board } = props;
     const [color, setColor] = useState<string>('transparent');
     const [opened, { open, close }] = useDisclosure(false);
-    // variables for setting tiles as interactable vs. fixed
     const [isInteractable, setIsInteractable] = useState<boolean>(false);
-    const isInitialized = useRef(false);
 
     useEffect(() => {
         // Set the initial color for each tile
@@ -77,18 +76,17 @@ export function Tile(props: TileProps) {
             8: palette[7],
             9: palette[8]
         }
-        const initialColor: string = initialColorDict[board[tileIndex]];
+        const initialColor: string = initialColorDict[startingBoard[tileIndex]];
         setColor(initialColor);
 
         // Set whether or not tile is interactable
-        // Use isInitialized to make sure this only happens on first render
-        if (!isInitialized.current) {
-            if (board[tileIndex] == 0) {
-                setIsInteractable(true);
-            }
-            isInitialized.current = true;
+        if (startingBoard[tileIndex] == 0) {
+            setIsInteractable(true);
         }
-    }, [palette, board, tileIndex]);
+        else {
+            setIsInteractable(false);
+        }
+    }, [startingBoard, palette, tileIndex]);
 
     return (
         <Popover width={200} position="bottom" withArrow shadow="md" opened={opened} onClose={close}>

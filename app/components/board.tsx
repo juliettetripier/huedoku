@@ -3,7 +3,6 @@
 import { ReactNode, useState, useEffect } from "react";
 import React from "react";
 import { Tile } from "./tile";
-import generateColorPalette from "../features/generateColorPalette";
 import { checkIfSubmittable } from "../features/submitSolution";
 
 interface GridProps {
@@ -16,13 +15,10 @@ function Grid({ children }: GridProps) {
     </div>;
 }
 
-export default function Board({ board, setBoard }: {board: Array<number>, 
-    setBoard: React.Dispatch<React.SetStateAction<Array<number>>> }) {
-    const [palette, setPalette] = useState<string[]>([]);
-
-    useEffect(() => {
-        setPalette(generateColorPalette())
-    }, []);
+export default function Board({ board, setBoard, startingBoard, palette }: {board: Array<number>, 
+    setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+    startingBoard: Array<number>,
+    palette: Array<string> }) {
 
     useEffect(() => {
         checkIfSubmittable(board);
@@ -34,7 +30,14 @@ export default function Board({ board, setBoard }: {board: Array<number>,
         const palette = generatedPalette;
     
         for (let i = 0; i < numTiles; i++) {
-            tiles.push(<Tile key={i} tileIndex={i} palette={palette} board={board} setBoard={setBoard}/>);
+            tiles.push(<Tile 
+                key={i} 
+                tileIndex={i} 
+                palette={palette} 
+                board={board} 
+                setBoard={setBoard}
+                startingBoard={startingBoard}
+            />);
         }
     
         return tiles;
