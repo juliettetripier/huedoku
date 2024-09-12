@@ -1,5 +1,9 @@
 import { valueIsValid } from "./generateSudoku";
 
+interface DifficultyDict {
+    [key: string]: number;
+}
+
 function isBoardFull(board: Array<Array<number>>) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
@@ -42,8 +46,14 @@ export function countSolutions(board: Array<Array<number>>, solutions: number = 
     return solutions;
 }
 
-export function removeTiles(board: Array<Array<number>>, emptyTiles: number = 0): Array<Array<number>> {
-    const targetEmptyTiles = 19;
+const difficultyDict: DifficultyDict = {
+    'easy': 19,
+    'medium': 28,
+    'hard': 37
+}
+
+export function removeTiles(board: Array<Array<number>>, difficulty: string, emptyTiles: number = 0): Array<Array<number>> {
+    const targetEmptyTiles = difficultyDict[difficulty];
     if (emptyTiles >= targetEmptyTiles) {
         return board;
     }
@@ -68,6 +78,6 @@ export function removeTiles(board: Array<Array<number>>, emptyTiles: number = 0)
         emptyTiles += 1;
      }
 
-     removeTiles(board, emptyTiles);
+     removeTiles(board, difficulty, emptyTiles);
      return board;
 }

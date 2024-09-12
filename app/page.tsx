@@ -2,10 +2,15 @@
 
 import Board from "./components/board";
 import "./globals.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SubmitButton } from "./components/submitButton";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
+
+function getPuzzleByDifficulty(difficulty: string, setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>) {
+  const newPuzzle = generateBoard(difficulty);
+  setStartingBoard(newPuzzle);
+}
 
 export default function Home() {
   const [board, setBoard] = useState(generateBoard());
@@ -25,9 +30,24 @@ export default function Home() {
       <div className="header">
         <h1>Huedoku</h1>
         <div className="difficulty-div">
-          <button className="difficulty-button" id="easy">Easy</button>
-          <button className="difficulty-button" id="medium">Medium</button>
-          <button className="difficulty-button" id="hard">Hard</button>
+          <button 
+            className="difficulty-button" 
+            onClick={() => getPuzzleByDifficulty('easy', setStartingBoard)} 
+          >
+            Easy
+          </button>
+          <button 
+            className="difficulty-button" 
+            onClick={() => getPuzzleByDifficulty('medium', setStartingBoard)}
+          >
+            Medium
+          </button>
+          <button 
+            className="difficulty-button" 
+            onClick={() => getPuzzleByDifficulty('hard', setStartingBoard)}
+          >
+            Hard
+          </button>
         </div>
         <SubmitButton 
           board={board} 
