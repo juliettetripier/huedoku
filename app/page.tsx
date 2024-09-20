@@ -47,10 +47,11 @@ export default function Home() {
   // first renders. Subsequent setBoards won't update startingBoard
   const [startingBoard, setStartingBoard] = useState(board);
   const [palette, setPalette] = useState<string[]>([]);
+  const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
 
   useEffect(() => {
-    getPuzzleByDifficulty("easy", setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
+    getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
   }, []);
 
   return (
@@ -60,19 +61,31 @@ export default function Home() {
         <div className="difficulty-div">
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('easy', setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)} 
+            onClick={() => {
+              const newDifficulty = "easy";
+              setCurrentDifficulty(newDifficulty);
+              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
+            }} 
           >
             Easy
           </button>
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('medium', setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
+            onClick={() => {
+              const newDifficulty = "medium";
+              setCurrentDifficulty(newDifficulty);
+              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
+            }}
           >
             Medium
           </button>
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('hard', setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
+            onClick={() => {
+              const newDifficulty = "hard";
+              setCurrentDifficulty(newDifficulty);
+              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
+            }}
           >
             Hard
           </button>
@@ -82,6 +95,7 @@ export default function Home() {
           setBoard={setBoard} 
           setStartingBoard={setStartingBoard}
           setPalette={setPalette}
+          difficulty={currentDifficulty}
           setBoardsByDifficulty={setBoardsByDifficulty} 
         />
       </div>

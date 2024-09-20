@@ -29,19 +29,18 @@ function handleSubmission(board: Array<number>,
     }
 }
 
-function getNewPuzzle(setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+function getNewPuzzle(difficulty: string,
+    setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
     setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>> ) {
 
-    const newBoard = generateBoard();
+    const newBoard = generateBoard(difficulty);
     setStartingBoard(newBoard);
     setBoard(newBoard);
 
     const newPalette = generateColorPalette();
     setPalette(newPalette);
-
-    const difficulty = 'easy';
 
     setBoardsByDifficulty(prevState => ({
         ...prevState,
@@ -52,12 +51,14 @@ function getNewPuzzle(setStartingBoard: React.Dispatch<React.SetStateAction<Arra
     }));
 }
 
-export function SubmitButton({ board, setBoard, setStartingBoard, setPalette, setBoardsByDifficulty }: {
+export function SubmitButton({ board, setBoard, setStartingBoard, setPalette, difficulty, setBoardsByDifficulty }: {
     board: Array<number>,
     setBoard: React.Dispatch <React.SetStateAction<Array<number>>>,
     setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
+    difficulty: string,
     setBoardsByDifficulty:  React.Dispatch<React.SetStateAction<BoardsByDifficulty>> }) {
+
     const [isSubmittable, setIsSubmittable] = useState(false);
     const [opened, { open, close }] = useDisclosure(false);
     const [isModalOpen, setModalOpen] = useState(false);
@@ -89,7 +90,7 @@ export function SubmitButton({ board, setBoard, setStartingBoard, setPalette, se
                     <Modal.Body>
                         {modalData === "valid" ? "You won!" : "Your solution is invalid."}
                         {modalData === "valid" ? 
-                        <Button onClick = {() => getNewPuzzle(setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}>
+                        <Button onClick = {() => getNewPuzzle(difficulty, setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}>
                             New puzzle
                         </Button> : undefined}
                         <Button onClick={() => setModalOpen(false)}>Ok</Button>
