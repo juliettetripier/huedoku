@@ -17,7 +17,6 @@ interface BoardsByDifficulty {
 function getPuzzleByDifficulty(difficulty: string, 
   setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
   setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
-  palette: string[],
   setPalette: React.Dispatch<React.SetStateAction<string[]>>,
   boardsByDifficulty: BoardsByDifficulty,
   setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>>
@@ -51,7 +50,7 @@ export default function Home() {
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
 
   useEffect(() => {
-    getPuzzleByDifficulty("easy", setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)
+    getPuzzleByDifficulty("easy", setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
   }, []);
 
   return (
@@ -61,26 +60,29 @@ export default function Home() {
         <div className="difficulty-div">
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('easy', setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)} 
+            onClick={() => getPuzzleByDifficulty('easy', setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)} 
           >
             Easy
           </button>
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('medium', setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
+            onClick={() => getPuzzleByDifficulty('medium', setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
           >
             Medium
           </button>
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('hard', setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
+            onClick={() => getPuzzleByDifficulty('hard', setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
           >
             Hard
           </button>
         </div>
         <SubmitButton 
-          board={board} 
-          setStartingBoard={setStartingBoard} 
+          board={board}
+          setBoard={setBoard} 
+          setStartingBoard={setStartingBoard}
+          setPalette={setPalette}
+          setBoardsByDifficulty={setBoardsByDifficulty} 
         />
       </div>
       <div>

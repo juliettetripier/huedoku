@@ -3,6 +3,14 @@ import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from "@mantine/core";
 import { isBoardFull, solutionIsValid } from "../features/submitSolution";
 import generateBoard from "../features/generateBoard";
+import generateColorPalette from "../features/generateColorPalette";
+
+interface BoardsByDifficulty {
+    [difficulty: string]: {
+      board: number[];
+      palette: string[];
+    }
+}
 
 function handleSubmission(board: Array<number>, 
     setModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
@@ -21,13 +29,35 @@ function handleSubmission(board: Array<number>,
     }
 }
 
-function getNewPuzzle(setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>) {
+function getNewPuzzle(setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+    setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
+    setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+    setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>> ) {
+
     const newBoard = generateBoard();
     setStartingBoard(newBoard);
+    setBoard(newBoard);
+
+    const newPalette = generateColorPalette();
+    setPalette(newPalette);
+
+    const difficulty = 'easy';
+
+    setBoardsByDifficulty(prevState => ({
+        ...prevState,
+        [difficulty]: {
+            'board': newBoard,
+            'palette': newPalette
+        }
+    }));
 }
 
-export function SubmitButton({ board, setStartingBoard }: {board: Array<number>, 
-    setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>> }) {
+export function SubmitButton({ board, setBoard, setStartingBoard, setPalette, setBoardsByDifficulty }: {
+    board: Array<number>,
+    setBoard: React.Dispatch <React.SetStateAction<Array<number>>>,
+    setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+    setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
+    setBoardsByDifficulty:  React.Dispatch<React.SetStateAction<BoardsByDifficulty>> }) {
     const [isSubmittable, setIsSubmittable] = useState(false);
     const [opened, { open, close }] = useDisclosure(false);
     const [isModalOpen, setModalOpen] = useState(false);
@@ -58,7 +88,10 @@ export function SubmitButton({ board, setStartingBoard }: {board: Array<number>,
                     </Modal.Header>
                     <Modal.Body>
                         {modalData === "valid" ? "You won!" : "Your solution is invalid."}
-                        {modalData === "valid" ? <Button onClick = {() => getNewPuzzle(setStartingBoard)}>New puzzle</Button> : undefined}
+                        {modalData === "valid" ? 
+                        <Button onClick = {() => getNewPuzzle(setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}>
+                            New puzzle
+                        </Button> : undefined}
                         <Button onClick={() => setModalOpen(false)}>Ok</Button>
                     </Modal.Body>
                 </Modal.Content>
