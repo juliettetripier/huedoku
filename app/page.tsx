@@ -7,9 +7,39 @@ import { SubmitButton } from "./components/submitButton";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
 
-function getPuzzleByDifficulty(difficulty: string, setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>) {
-  const newPuzzle = generateBoard(difficulty);
-  setStartingBoard(newPuzzle);
+interface BoardsByDifficulty {
+  [difficulty: string]: {
+    board: number[];
+    palette: string[];
+  }
+}
+
+function getPuzzleByDifficulty(difficulty: string, 
+  setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+  setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+  palette: string[],
+  setPalette: React.Dispatch<React.SetStateAction<string[]>>,
+  boardsByDifficulty: BoardsByDifficulty,
+  setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>>
+) {
+  if (boardsByDifficulty[difficulty]) {
+    setStartingBoard(boardsByDifficulty[difficulty]['board']);
+    setBoard(boardsByDifficulty[difficulty]['board']);
+    setPalette(boardsByDifficulty[difficulty]['palette']);
+  } else {
+    const newPuzzle = generateBoard(difficulty);
+    const newPalette = generateColorPalette();
+    setStartingBoard(newPuzzle);
+    setBoard(newPuzzle);
+    setPalette(newPalette);
+    setBoardsByDifficulty(prevState => ({
+      ...prevState,
+      [difficulty]: {
+        'board': newPuzzle,
+        'palette': newPalette
+      }
+    }));
+  }
 }
 
 export default function Home() {
@@ -18,12 +48,11 @@ export default function Home() {
   // first renders. Subsequent setBoards won't update startingBoard
   const [startingBoard, setStartingBoard] = useState(board);
   const [palette, setPalette] = useState<string[]>([]);
+  const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
 
-  // Update board, palette, etc. when a new starting board is generated
   useEffect(() => {
-    setBoard(startingBoard);
-    setPalette(generateColorPalette);
-  }, [startingBoard]);
+    getPuzzleByDifficulty("easy", setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -32,19 +61,19 @@ export default function Home() {
         <div className="difficulty-div">
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('easy', setStartingBoard)} 
+            onClick={() => getPuzzleByDifficulty('easy', setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)} 
           >
             Easy
           </button>
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('medium', setStartingBoard)}
+            onClick={() => getPuzzleByDifficulty('medium', setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
           >
             Medium
           </button>
           <button 
             className="difficulty-button" 
-            onClick={() => getPuzzleByDifficulty('hard', setStartingBoard)}
+            onClick={() => getPuzzleByDifficulty('hard', setStartingBoard, setBoard, palette, setPalette, boardsByDifficulty, setBoardsByDifficulty)}
           >
             Hard
           </button>
