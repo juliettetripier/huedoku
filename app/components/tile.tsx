@@ -1,8 +1,6 @@
 import { Popover, Text, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-
-import React from 'react';
-import { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
+import React, { Dispatch, SetStateAction, useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
 import { updateBoard } from '../features/submitSolution';
 
@@ -61,6 +59,7 @@ export function Tile(props: TileProps) {
     const [color, setColor] = useState<string>('transparent');
     const [opened, { open, close }] = useDisclosure(false);
     const [isInteractable, setIsInteractable] = useState<boolean>(false);
+    const tileRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         // Set the initial color for each tile
@@ -86,14 +85,25 @@ export function Tile(props: TileProps) {
         else {
             setIsInteractable(false);
         }
+
+        // Make tile have transitions after being intialized
+        const currentTile = tileRef.current;
+        console.log(currentTile);
+        if (currentTile) {
+            console.log('test');
+            setTimeout(() => {
+                currentTile.classList.remove('no-transition');
+            }, 100);
+        }
     }, [startingBoard, palette, tileIndex]);
 
     return (
         <Popover width={200} position="bottom" withArrow shadow="md" opened={opened} onClose={close}>
             <Popover.Target>
-                <div 
+                <div
+                    ref={tileRef} 
                     className={
-                        isInteractable ? 'tile tile-interactable' : 'tile tile-fixed no-transition'
+                        isInteractable ? 'tile tile-interactable no-transition' : 'tile tile-fixed no-transition'
                     } 
                     style={{ backgroundColor: color }} 
                     onClick={isInteractable ? open : undefined}

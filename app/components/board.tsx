@@ -19,7 +19,7 @@ export default function Board({ board, setBoard, startingBoard, palette }: {boar
     setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     startingBoard: Array<number>,
     palette: Array<string> }) {
-
+    
     useEffect(() => {
         checkIfSubmittable(board);
     }, [board]);

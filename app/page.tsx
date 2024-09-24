@@ -50,8 +50,15 @@ export default function Home() {
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
 
+  const setNoTransition = () => {
+    const tiles = document.querySelectorAll('.tile');
+    tiles.forEach(tile => {
+      tile.classList.add('no-transition');
+    });
+  };
+
   useEffect(() => {
-    getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
+    getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
   }, []);
 
   return (
@@ -63,6 +70,7 @@ export default function Home() {
             className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button': undefined}`}
             id="easy" 
             onClick={() => {
+              setNoTransition();
               const newDifficulty = "easy";
               setCurrentDifficulty(newDifficulty);
               getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
@@ -74,6 +82,7 @@ export default function Home() {
             className={`difficulty-button ${currentDifficulty == 'medium' ? 'selected-button' : undefined}`}
             id="medium" 
             onClick={() => {
+              setNoTransition();
               const newDifficulty = "medium";
               setCurrentDifficulty(newDifficulty);
               getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
@@ -85,6 +94,7 @@ export default function Home() {
             className={`difficulty-button ${currentDifficulty == 'hard' ? 'selected-button' : undefined}`}
             id="hard" 
             onClick={() => {
+              setNoTransition();
               const newDifficulty = "hard";
               setCurrentDifficulty(newDifficulty);
               getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
