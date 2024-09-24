@@ -16,6 +16,11 @@ main {
   opacity: 0.6;
 }
 
+.selected-button {
+  background-color: teal;
+  color: white;
+}
+
 .main-grid {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto;

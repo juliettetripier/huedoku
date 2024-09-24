@@ -60,7 +60,8 @@ export default function Home() {
         <h1>Huedoku</h1>
         <div className="difficulty-div">
           <button 
-            className="difficulty-button" 
+            className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button': undefined}`}
+            id="easy" 
             onClick={() => {
               const newDifficulty = "easy";
               setCurrentDifficulty(newDifficulty);
@@ -70,7 +71,8 @@ export default function Home() {
             Easy
           </button>
           <button 
-            className="difficulty-button" 
+            className={`difficulty-button ${currentDifficulty == 'medium' ? 'selected-button' : undefined}`}
+            id="medium" 
             onClick={() => {
               const newDifficulty = "medium";
               setCurrentDifficulty(newDifficulty);
@@ -80,7 +82,8 @@ export default function Home() {
             Medium
           </button>
           <button 
-            className="difficulty-button" 
+            className={`difficulty-button ${currentDifficulty == 'hard' ? 'selected-button' : undefined}`}
+            id="hard" 
             onClick={() => {
               const newDifficulty = "hard";
               setCurrentDifficulty(newDifficulty);
