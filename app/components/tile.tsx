@@ -2,7 +2,7 @@ import { Popover, Text, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React, { Dispatch, SetStateAction, useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
-import { updateBoard } from '../features/submitSolution';
+import { updateBoard } from '../features/validateSolution';
 
 export type TileProps = {
     tileIndex: number;

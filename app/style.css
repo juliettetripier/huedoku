@@ -5,12 +5,6 @@ main {
     padding-right: 6rem;
 }
 
-.submit-button {
-  background-color: pink;
-  padding: 15px;
-  cursor: pointer;
-}
-
 .disabled {
   cursor: default;
   opacity: 0.6;

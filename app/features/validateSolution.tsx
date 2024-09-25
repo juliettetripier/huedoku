@@ -1,6 +1,25 @@
 import { TileProps } from "../components/tile";
 
 // Update board state when a new color is selected
+// Check if board is full
+// Check if filled out board is valid
+// Repurpose checkIfSubmittable to instead open modal
+// If valid:
+    // Open modal/overlay with "new puzzle" button
+    // and "admire puzzle" button to click out of modal
+    // have a "new puzzle" button above the board so they can
+    // get a new puzzle if they click out
+// Don't have to do anything if not valid
+
+
+// We also need to highlight repeated colors as they're selected
+// Maybe in the board component, where we're currently checking if submittable
+// or maybe in tile component...? would it be more efficient to 
+// specifically check for the tile that was just selected instead
+// of checking the whole board for repeats? 
+
+
+// Update board state when a new color is selected
 export function updateBoard(props: TileProps, value: number) {
     let newBoard: Array<number> = [];
     props.setBoard(prevBoard => {
@@ -19,20 +38,6 @@ export function isBoardFull(board: Array<number>) {
         }
     }
     return true;
-}
-
-
-// Update button css if board is full
-export function checkIfSubmittable(board: Array<number>) {
-    const submitButton = document.querySelector('.submit-button') as HTMLElement;
-    if (submitButton) {
-        if (isBoardFull(board)) {
-            submitButton.classList.remove('disabled');
-        }
-        else {
-            submitButton.classList.add('disabled');
-        }
-    }
 }
 
 
@@ -76,3 +81,11 @@ export function solutionIsValid(board: Array<number>) {
     return true;
 }
 
+export function checkForValidSolution(board: Array<number>) {
+    if (isBoardFull(board)) {
+        if (solutionIsValid(board)) {
+            return true;
+        };
+    };
+    return false;
+}

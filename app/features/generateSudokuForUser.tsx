@@ -47,7 +47,7 @@ export function countSolutions(board: Array<Array<number>>, solutions: number = 
 }
 
 const difficultyDict: DifficultyDict = {
-    'easy': 19,
+    'easy': 1,
     'medium': 28,
     'hard': 37
 }

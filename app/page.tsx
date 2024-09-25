@@ -3,9 +3,9 @@
 import Board from "./components/board";
 import "./globals.css";
 import React, { useState, useEffect } from "react";
-import { SubmitButton } from "./components/submitButton";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
+import { SuccessModal } from "./components/successModal";
 
 interface BoardsByDifficulty {
   [difficulty: string]: {
@@ -41,6 +41,28 @@ function getPuzzleByDifficulty(difficulty: string,
   }
 }
 
+function getNewPuzzle(difficulty: string,
+  setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+  setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
+  setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+  setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>> ) {
+
+  const newBoard = generateBoard(difficulty);
+  setStartingBoard(newBoard);
+  setBoard(newBoard);
+
+  const newPalette = generateColorPalette();
+  setPalette(newPalette);
+
+  setBoardsByDifficulty(prevState => ({
+      ...prevState,
+      [difficulty]: {
+          'board': newBoard,
+          'palette': newPalette
+      }
+  }));
+}
+
 export default function Home() {
   const [board, setBoard] = useState(generateBoard());
   // startingBoard is set to the value of board only when the board
@@ -49,6 +71,7 @@ export default function Home() {
   const [palette, setPalette] = useState<string[]>([]);
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
+  const [showNewPuzzleButton, setShowNewPuzzleButton] = useState(false);
 
   const setNoTransition = () => {
     const tiles = document.querySelectorAll('.tile');
@@ -71,6 +94,9 @@ export default function Home() {
             id="easy" 
             onClick={() => {
               setNoTransition();
+              // maybe check if new puzzle button is visible
+              // and if so, put new puzzle in puzzlesbydifficulty
+              // and hide new puzzle button
               const newDifficulty = "easy";
               setCurrentDifficulty(newDifficulty);
               getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
@@ -103,13 +129,24 @@ export default function Home() {
             Hard
           </button>
         </div>
-        <SubmitButton 
+        <button 
+          className="new-puzzle-button" 
+          style={{ display: showNewPuzzleButton ? "block" : "none" }}
+          onClick = {() => {
+            setNoTransition();
+            setShowNewPuzzleButton(false); 
+            getNewPuzzle(currentDifficulty, setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}}
+        >
+          New puzzle
+        </button>
+        <SuccessModal 
           board={board}
           setBoard={setBoard} 
           setStartingBoard={setStartingBoard}
           setPalette={setPalette}
           difficulty={currentDifficulty}
-          setBoardsByDifficulty={setBoardsByDifficulty} 
+          setBoardsByDifficulty={setBoardsByDifficulty}
+          setShowNewPuzzleButton={setShowNewPuzzleButton} 
         />
       </div>
       <div>
