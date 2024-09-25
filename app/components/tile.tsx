@@ -88,9 +88,7 @@ export function Tile(props: TileProps) {
 
         // Make tile have transitions after being intialized
         const currentTile = tileRef.current;
-        console.log(currentTile);
         if (currentTile) {
-            console.log('test');
             setTimeout(() => {
                 currentTile.classList.remove('no-transition');
             }, 100);

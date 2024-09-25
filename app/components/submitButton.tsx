@@ -70,6 +70,13 @@ export function SubmitButton({ board, setBoard, setStartingBoard, setPalette, di
 
     const modalStyle = modalData === "valid" ? { borderTop: '.375rem solid #4c8c2b' }
         : { borderTop: '.375rem solid #c8102e' }
+    
+    const setNoTransition = () => {
+        const tiles = document.querySelectorAll('.tile');
+        tiles.forEach(tile => {
+        tile.classList.add('no-transition');
+        });
+    };
 
     return (
         <>
@@ -90,7 +97,10 @@ export function SubmitButton({ board, setBoard, setStartingBoard, setPalette, di
                     <Modal.Body>
                         {modalData === "valid" ? "You won!" : "Your solution is invalid."}
                         {modalData === "valid" ? 
-                        <Button onClick = {() => getNewPuzzle(difficulty, setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}>
+                        <Button onClick = {() => {
+                            setNoTransition(); 
+                            getNewPuzzle(difficulty, setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}
+                        }>
                             New puzzle
                         </Button> : undefined}
                         <Button onClick={() => setModalOpen(false)}>Ok</Button>
