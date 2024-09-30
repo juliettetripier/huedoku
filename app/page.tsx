@@ -43,6 +43,7 @@ function getPuzzleByDifficulty(difficulty: string,
   }
 }
 
+
 function getNewPuzzle(difficulty: string,
   setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
   setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
@@ -81,6 +82,16 @@ export default function Home() {
     });
   };
 
+  const updateBoardsByDifficulty = () => {
+    setBoardsByDifficulty(prevState => ({
+      ...prevState, 
+      [currentDifficulty]: {
+        ...prevState[currentDifficulty],
+        'currentBoard': currentBoard
+      }
+    }));
+  }
+
   useEffect(() => {
     getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
   }, []);
@@ -94,6 +105,7 @@ export default function Home() {
             className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button': undefined}`}
             id="easy" 
             onClick={() => {
+              updateBoardsByDifficulty();
               setNoTransition();
               // maybe check if new puzzle button is visible
               // and if so, put new puzzle in puzzlesbydifficulty
@@ -109,6 +121,7 @@ export default function Home() {
             className={`difficulty-button ${currentDifficulty == 'medium' ? 'selected-button' : undefined}`}
             id="medium" 
             onClick={() => {
+              updateBoardsByDifficulty();
               setNoTransition();
               const newDifficulty = "medium";
               setCurrentDifficulty(newDifficulty);
@@ -121,6 +134,7 @@ export default function Home() {
             className={`difficulty-button ${currentDifficulty == 'hard' ? 'selected-button' : undefined}`}
             id="hard" 
             onClick={() => {
+              updateBoardsByDifficulty();
               setNoTransition();
               const newDifficulty = "hard";
               setCurrentDifficulty(newDifficulty);

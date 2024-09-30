@@ -75,7 +75,7 @@ export function Tile(props: TileProps) {
             8: palette[7],
             9: palette[8]
         }
-        const initialColor: string = initialColorDict[startingBoard[tileIndex]];
+        const initialColor: string = initialColorDict[currentBoard[tileIndex]];
         setColor(initialColor);
 
         // Set whether or not tile is interactable
