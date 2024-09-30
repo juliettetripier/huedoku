@@ -9,32 +9,34 @@ import { SuccessModal } from "./components/successModal";
 
 interface BoardsByDifficulty {
   [difficulty: string]: {
-    board: number[];
+    startingBoard: number[];
+    currentBoard: number[];
     palette: string[];
   }
 }
 
 function getPuzzleByDifficulty(difficulty: string, 
   setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
-  setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+  setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
   setPalette: React.Dispatch<React.SetStateAction<string[]>>,
   boardsByDifficulty: BoardsByDifficulty,
   setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>>
 ) {
   if (boardsByDifficulty[difficulty]) {
-    setStartingBoard(boardsByDifficulty[difficulty]['board']);
-    setBoard(boardsByDifficulty[difficulty]['board']);
+    setStartingBoard(boardsByDifficulty[difficulty]['startingBoard']);
+    setCurrentBoard(boardsByDifficulty[difficulty]['currentBoard']);
     setPalette(boardsByDifficulty[difficulty]['palette']);
   } else {
     const newPuzzle = generateBoard(difficulty);
     const newPalette = generateColorPalette();
     setStartingBoard(newPuzzle);
-    setBoard(newPuzzle);
+    setCurrentBoard(newPuzzle);
     setPalette(newPalette);
     setBoardsByDifficulty(prevState => ({
       ...prevState,
       [difficulty]: {
-        'board': newPuzzle,
+        'startingBoard': newPuzzle,
+        'currentBoard': newPuzzle,
         'palette': newPalette
       }
     }));
@@ -44,12 +46,12 @@ function getPuzzleByDifficulty(difficulty: string,
 function getNewPuzzle(difficulty: string,
   setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
   setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
-  setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+  setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
   setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>> ) {
 
   const newBoard = generateBoard(difficulty);
   setStartingBoard(newBoard);
-  setBoard(newBoard);
+  setCurrentBoard(newBoard);
 
   const newPalette = generateColorPalette();
   setPalette(newPalette);
@@ -57,17 +59,16 @@ function getNewPuzzle(difficulty: string,
   setBoardsByDifficulty(prevState => ({
       ...prevState,
       [difficulty]: {
-          'board': newBoard,
+          'startingBoard': newBoard,
+          'currentBoard': newBoard,
           'palette': newPalette
       }
   }));
 }
 
 export default function Home() {
-  const [board, setBoard] = useState(generateBoard());
-  // startingBoard is set to the value of board only when the board
-  // first renders. Subsequent setBoards won't update startingBoard
-  const [startingBoard, setStartingBoard] = useState(board);
+  const [currentBoard, setCurrentBoard] = useState(generateBoard());
+  const [startingBoard, setStartingBoard] = useState(currentBoard);
   const [palette, setPalette] = useState<string[]>([]);
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
@@ -81,7 +82,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
+    getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
   }, []);
 
   return (
@@ -99,7 +100,7 @@ export default function Home() {
               // and hide new puzzle button
               const newDifficulty = "easy";
               setCurrentDifficulty(newDifficulty);
-              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
+              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
             }} 
           >
             Easy
@@ -111,7 +112,7 @@ export default function Home() {
               setNoTransition();
               const newDifficulty = "medium";
               setCurrentDifficulty(newDifficulty);
-              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
+              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
             }}
           >
             Medium
@@ -123,7 +124,7 @@ export default function Home() {
               setNoTransition();
               const newDifficulty = "hard";
               setCurrentDifficulty(newDifficulty);
-              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
+              getPuzzleByDifficulty(newDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty)
             }}
           >
             Hard
@@ -135,13 +136,13 @@ export default function Home() {
           onClick = {() => {
             setNoTransition();
             setShowNewPuzzleButton(false); 
-            getNewPuzzle(currentDifficulty, setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}}
+            getNewPuzzle(currentDifficulty, setStartingBoard, setPalette, setCurrentBoard, setBoardsByDifficulty)}}
         >
           New puzzle
         </button>
         <SuccessModal 
-          board={board}
-          setBoard={setBoard} 
+          currentBoard={currentBoard}
+          setCurrentBoard={setCurrentBoard} 
           setStartingBoard={setStartingBoard}
           setPalette={setPalette}
           difficulty={currentDifficulty}
@@ -151,8 +152,8 @@ export default function Home() {
       </div>
       <div>
         <Board 
-          board={board} 
-          setBoard={setBoard}
+          currentBoard={currentBoard} 
+          setCurrentBoard={setCurrentBoard}
           startingBoard={startingBoard} 
           palette={palette} 
         />

@@ -7,8 +7,8 @@ import { updateBoard } from '../features/validateSolution';
 export type TileProps = {
     tileIndex: number;
     palette: Array<string>;
-    board: Array<number>;
-    setBoard: Dispatch<SetStateAction<Array<number>>>;
+    currentBoard: Array<number>;
+    setCurrentBoard: Dispatch<SetStateAction<Array<number>>>;
     startingBoard: Array<number>;
 }
 
@@ -55,7 +55,7 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
 
 
 export function Tile(props: TileProps) {
-    const { tileIndex, palette, startingBoard, board } = props;
+    const { tileIndex, palette, startingBoard, currentBoard } = props;
     const [color, setColor] = useState<string>('transparent');
     const [opened, { open, close }] = useDisclosure(false);
     const [isInteractable, setIsInteractable] = useState<boolean>(false);

@@ -22,7 +22,7 @@ import { TileProps } from "../components/tile";
 // Update board state when a new color is selected
 export function updateBoard(props: TileProps, value: number) {
     let newBoard: Array<number> = [];
-    props.setBoard(prevBoard => {
+    props.setCurrentBoard(prevBoard => {
         newBoard = [...prevBoard];
         newBoard[props.tileIndex] = value;
         return newBoard;

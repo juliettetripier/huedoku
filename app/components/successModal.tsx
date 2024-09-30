@@ -6,7 +6,8 @@ import { checkForValidSolution } from "../features/validateSolution";
 
 interface BoardsByDifficulty {
     [difficulty: string]: {
-      board: number[];
+      startingBoard: number[];
+      currentBoard: number[];
       palette: string[];
     }
 }
@@ -15,12 +16,12 @@ interface BoardsByDifficulty {
 function getNewPuzzle(difficulty: string,
     setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
-    setBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
+    setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>> ) {
 
     const newBoard = generateBoard(difficulty);
     setStartingBoard(newBoard);
-    setBoard(newBoard);
+    setCurrentBoard(newBoard);
 
     const newPalette = generateColorPalette();
     setPalette(newPalette);
@@ -28,16 +29,17 @@ function getNewPuzzle(difficulty: string,
     setBoardsByDifficulty(prevState => ({
         ...prevState,
         [difficulty]: {
-            'board': newBoard,
+            'startingBoard': newBoard,
+            'currentBoard': newBoard,
             'palette': newPalette
         }
     }));
 }
 
 
-export function SuccessModal({ board, setBoard, setStartingBoard, setPalette, difficulty, setBoardsByDifficulty, setShowNewPuzzleButton }: {
-    board: Array<number>,
-    setBoard: React.Dispatch <React.SetStateAction<Array<number>>>,
+export function SuccessModal({ currentBoard, setCurrentBoard, setStartingBoard, setPalette, difficulty, setBoardsByDifficulty, setShowNewPuzzleButton }: {
+    currentBoard: Array<number>,
+    setCurrentBoard: React.Dispatch <React.SetStateAction<Array<number>>>,
     setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
     difficulty: string,
@@ -55,11 +57,11 @@ export function SuccessModal({ board, setBoard, setStartingBoard, setPalette, di
     };
 
     useEffect(() => {
-        if (checkForValidSolution(board)) {
+        if (checkForValidSolution(currentBoard)) {
             setModalOpen(true);
             setShowNewPuzzleButton(true);
         }
-    }, [board]);
+    }, [currentBoard]);
 
     return <Modal.Root opened={isModalOpen} onClose={() => setModalOpen(false)}>
         <Modal.Overlay>
@@ -74,7 +76,7 @@ export function SuccessModal({ board, setBoard, setStartingBoard, setPalette, di
                     <Button onClick = {() => {
                         setNoTransition();
                         setShowNewPuzzleButton(false); 
-                        getNewPuzzle(difficulty, setStartingBoard, setPalette, setBoard, setBoardsByDifficulty)}
+                        getNewPuzzle(difficulty, setStartingBoard, setPalette, setCurrentBoard, setBoardsByDifficulty)}
                     }>
                         New puzzle
                     </Button>
