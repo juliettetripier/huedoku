@@ -14,7 +14,8 @@ function Grid({ children }: GridProps) {
     </div>;
 }
 
-export default function Board({ currentBoard, setCurrentBoard, startingBoard, palette }: {currentBoard: Array<number>, 
+export default function Board({ currentBoard, setCurrentBoard, startingBoard, palette }: {
+    currentBoard: Array<number>, 
     setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     startingBoard: Array<number>,
     palette: Array<string> }) {

@@ -1,18 +1,6 @@
 import { TileProps } from "../components/tile";
 
-// Update board state when a new color is selected
-// Check if board is full
-// Check if filled out board is valid
-// Repurpose checkIfSubmittable to instead open modal
-// If valid:
-    // Open modal/overlay with "new puzzle" button
-    // and "admire puzzle" button to click out of modal
-    // have a "new puzzle" button above the board so they can
-    // get a new puzzle if they click out
-// Don't have to do anything if not valid
-
-
-// We also need to highlight repeated colors as they're selected
+// We need to highlight repeated colors as they're selected
 // Maybe in the board component, where we're currently checking if submittable
 // or maybe in tile component...? would it be more efficient to 
 // specifically check for the tile that was just selected instead

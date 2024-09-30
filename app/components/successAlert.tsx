@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { Modal, Button } from "@mantine/core";
+import { Alert, Button } from "@mantine/core";
+import { IconTrophy } from "@tabler/icons-react";
+import confetti from 'canvas-confetti';
 import generateBoard from "../features/generateBoard";
 import generateColorPalette from "../features/generateColorPalette";
 import { checkForValidSolution } from "../features/validateSolution";
@@ -9,9 +11,9 @@ interface BoardsByDifficulty {
       startingBoard: number[];
       currentBoard: number[];
       palette: string[];
+      solved: boolean;
     }
 }
-
 
 function getNewPuzzle(difficulty: string,
     setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
@@ -31,23 +33,24 @@ function getNewPuzzle(difficulty: string,
         [difficulty]: {
             'startingBoard': newBoard,
             'currentBoard': newBoard,
-            'palette': newPalette
+            'palette': newPalette,
+            'solved': false
         }
     }));
 }
 
 
-export function SuccessModal({ currentBoard, setCurrentBoard, setStartingBoard, setPalette, difficulty, setBoardsByDifficulty, setShowNewPuzzleButton }: {
+export function SuccessAlert({ currentBoard, setCurrentBoard, setStartingBoard, setPalette, difficulty, setBoardsByDifficulty, alertVisible, setAlertVisible }: {
     currentBoard: Array<number>,
-    setCurrentBoard: React.Dispatch <React.SetStateAction<Array<number>>>,
+    setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setPalette: React.Dispatch<React.SetStateAction<Array<string>>>,
     difficulty: string,
     setBoardsByDifficulty:  React.Dispatch<React.SetStateAction<BoardsByDifficulty>>,
-    setShowNewPuzzleButton: React.Dispatch<React.SetStateAction<boolean>> }) 
+    alertVisible: boolean,
+    setAlertVisible: React.Dispatch<React.SetStateAction<boolean>> }) 
 {
-    const [isModalOpen, setModalOpen] = useState(false);
-    const modalStyle = { borderTop: '.375rem solid #4c8c2b' };
+    const icon = <IconTrophy />;
     
     const setNoTransition = () => {
         const tiles = document.querySelectorAll('.tile');
@@ -58,31 +61,31 @@ export function SuccessModal({ currentBoard, setCurrentBoard, setStartingBoard, 
 
     useEffect(() => {
         if (checkForValidSolution(currentBoard)) {
-            setModalOpen(true);
-            setShowNewPuzzleButton(true);
+            setAlertVisible(true);
+            confetti();
+            setBoardsByDifficulty(prevState => ({
+                ...prevState, 
+                [difficulty]: {
+                    ...prevState[difficulty],
+                    'solved': true
+                }
+            }))
         }
     }, [currentBoard]);
 
-    return <Modal.Root opened={isModalOpen} onClose={() => setModalOpen(false)}>
-        <Modal.Overlay>
-            <Modal.Content>
-                <Modal.Header style={modalStyle}>
-                    <Modal.Title>
-                        Success!
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    You won!
-                    <Button onClick = {() => {
-                        setNoTransition();
-                        setShowNewPuzzleButton(false); 
-                        getNewPuzzle(difficulty, setStartingBoard, setPalette, setCurrentBoard, setBoardsByDifficulty)}
-                    }>
-                        New puzzle
-                    </Button>
-                    <Button onClick={() => setModalOpen(false)}>Admire puzzle</Button>
-                </Modal.Body>
-            </Modal.Content>
-        </Modal.Overlay>
-    </Modal.Root>
+    return <Alert 
+            variant="light" 
+            color="green" 
+            title="Puzzle Solved!" 
+            icon={ icon } 
+            style={{ display: alertVisible ? 'block' : 'none' }}
+        >
+        <Button onClick = {() => {
+            setNoTransition();
+            setAlertVisible(false);
+            getNewPuzzle(difficulty, setStartingBoard, setPalette, setCurrentBoard, setBoardsByDifficulty)}
+        }>
+            New puzzle
+        </Button>
+    </Alert>
 }
