@@ -12,6 +12,7 @@ interface BoardsByDifficulty {
       currentBoard: number[];
       palette: string[];
       solved: boolean;
+      previouslySolved: boolean;
     }
 }
 
@@ -34,7 +35,8 @@ function getNewPuzzle(difficulty: string,
             'startingBoard': newBoard,
             'currentBoard': newBoard,
             'palette': newPalette,
-            'solved': false
+            'solved': false,
+            'previouslySolved': false
         }
     }));
 }

@@ -13,6 +13,7 @@ interface BoardsByDifficulty {
     currentBoard: number[];
     palette: string[];
     solved: boolean;
+    previouslySolved: boolean;
   }
 }
 
@@ -39,7 +40,8 @@ function getPuzzleByDifficulty(difficulty: string,
         'startingBoard': newPuzzle,
         'currentBoard': newPuzzle,
         'palette': newPalette,
-        'solved': false
+        'solved': false,
+        'previouslySolved': false
       }
     }));
   }
@@ -52,6 +54,7 @@ export default function Home() {
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
   const [alertVisible, setAlertVisible] = useState(false);
+  const [puzzlesSolved, setPuzzlesSolved] = useState(0);
 
   const setNoTransition = () => {
     const tiles = document.querySelectorAll('.tile');
@@ -86,6 +89,15 @@ export default function Home() {
     getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
   }, []);
 
+  useEffect(() => {
+    if (boardsByDifficulty[currentDifficulty] &&
+      boardsByDifficulty[currentDifficulty].solved == true 
+      && boardsByDifficulty[currentDifficulty].previouslySolved == false) {
+        setPuzzlesSolved(prev => prev + 1);
+        boardsByDifficulty[currentDifficulty].previouslySolved = true;
+      } 
+  }, [boardsByDifficulty, currentDifficulty])
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="header">
@@ -119,16 +131,19 @@ export default function Home() {
             Hard
           </button>
         </div>
-        <SuccessAlert 
-          currentBoard={currentBoard}
-          setCurrentBoard={setCurrentBoard} 
-          setStartingBoard={setStartingBoard}
-          setPalette={setPalette}
-          difficulty={currentDifficulty}
-          setBoardsByDifficulty={setBoardsByDifficulty}
-          alertVisible={alertVisible}
-          setAlertVisible={setAlertVisible}
-        />
+        <div>
+          <SuccessAlert 
+            currentBoard={currentBoard}
+            setCurrentBoard={setCurrentBoard} 
+            setStartingBoard={setStartingBoard}
+            setPalette={setPalette}
+            difficulty={currentDifficulty}
+            setBoardsByDifficulty={setBoardsByDifficulty}
+            alertVisible={alertVisible}
+            setAlertVisible={setAlertVisible}
+          />
+          <span>Puzzles Solved: { puzzlesSolved }</span>
+        </div>
       </div>
 
       <div>
