@@ -42,7 +42,7 @@ function getNewPuzzle(difficulty: string,
 }
 
 
-export function SuccessAlert({ currentBoard, setCurrentBoard, setStartingBoard, setPalette, difficulty, setBoardsByDifficulty, alertVisible, setAlertVisible }: {
+export default function SuccessAlert({ currentBoard, setCurrentBoard, setStartingBoard, setPalette, difficulty, setBoardsByDifficulty, alertVisible, setAlertVisible }: {
     currentBoard: Array<number>,
     setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
@@ -50,8 +50,8 @@ export function SuccessAlert({ currentBoard, setCurrentBoard, setStartingBoard, 
     difficulty: string,
     setBoardsByDifficulty:  React.Dispatch<React.SetStateAction<BoardsByDifficulty>>,
     alertVisible: boolean,
-    setAlertVisible: React.Dispatch<React.SetStateAction<boolean>> }) 
-{
+    setAlertVisible: React.Dispatch<React.SetStateAction<boolean>> 
+}) {
     const icon = <IconTrophy />;
     
     const setNoTransition = () => {

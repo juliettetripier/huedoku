@@ -5,7 +5,8 @@ import "./globals.css";
 import React, { useState, useEffect } from "react";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
-import { SuccessAlert } from "./components/successAlert";
+import SuccessAlert from "./components/successAlert";
+import ResetAllButton from "./components/resetAllButton";
 
 interface BoardsByDifficulty {
   [difficulty: string]: {
@@ -31,9 +32,6 @@ function getPuzzleByDifficulty(difficulty: string,
   } else {
     const newPuzzle = generateBoard(difficulty);
     const newPalette = generateColorPalette();
-    setStartingBoard(newPuzzle);
-    setCurrentBoard(newPuzzle);
-    setPalette(newPalette);
     setBoardsByDifficulty(prevState => ({
       ...prevState,
       [difficulty]: {
@@ -44,6 +42,9 @@ function getPuzzleByDifficulty(difficulty: string,
         'previouslySolved': false
       }
     }));
+    setStartingBoard(newPuzzle);
+    setCurrentBoard(newPuzzle);
+    setPalette(newPalette);
   }
 }
 
@@ -80,7 +81,8 @@ export default function Home() {
     const newDifficulty = difficulty;
     setCurrentDifficulty(newDifficulty);
     getPuzzleByDifficulty(newDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
-    if (boardsByDifficulty[newDifficulty].solved) {
+    if (boardsByDifficulty[newDifficulty] && 
+      boardsByDifficulty[newDifficulty].solved) {
       setAlertVisible(true);
     }
   }
@@ -94,8 +96,14 @@ export default function Home() {
       boardsByDifficulty[currentDifficulty].solved == true 
       && boardsByDifficulty[currentDifficulty].previouslySolved == false) {
         setPuzzlesSolved(prev => prev + 1);
-        boardsByDifficulty[currentDifficulty].previouslySolved = true;
-      } 
+        setBoardsByDifficulty(prevBoards => ({
+          ...prevBoards,
+          [currentDifficulty]: {
+            ...prevBoards[currentDifficulty],
+            previouslySolved: true,
+          }
+        }));
+      }
   }, [boardsByDifficulty, currentDifficulty])
 
   return (
@@ -130,6 +138,13 @@ export default function Home() {
           >
             Hard
           </button>
+        </div>
+        <div>
+            <ResetAllButton
+              currentDifficulty={currentDifficulty} 
+              boardsByDifficulty={boardsByDifficulty}
+              setCurrentBoard={setCurrentBoard}
+            />
         </div>
         <div>
           <SuccessAlert 

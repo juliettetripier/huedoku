@@ -17,22 +17,13 @@ interface InitialColorDict {
 }
 
 
-function changeTileColor(setColor: Dispatch<SetStateAction<string>>, 
-    color: string, onClose: () => void) {
-        setColor(color);
-        onClose();
+function resetTile(props: TileProps, onClose: () => void) {
+    updateBoard(props, 0);
+    onClose();
     }
 
 
-function resetTile(props: TileProps, setColor: Dispatch<SetStateAction<string>>,
-        onClose: () => void) {
-        updateBoard(props, 0);
-        changeTileColor(setColor, 'transparent', onClose);
-    }
-
-
-function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateAction<string>>, 
-    onClose: () => void) {
+function generateColorOptions(props: TileProps, onClose: () => void) {
     const colorOptions = [];
     const colorPalette = props.palette;
     const numOptions = 9;
@@ -44,7 +35,7 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
                 color={colorPalette[i]} 
                 onColorSelection={() => {
                     updateBoard(props, i+1);
-                    changeTileColor(setColor, colorPalette[i], onClose);
+                    onClose();
                 }}
             />
         );
@@ -56,6 +47,18 @@ function generateColorOptions(props: TileProps, setColor: Dispatch<SetStateActio
 
 export function Tile(props: TileProps) {
     const { tileIndex, palette, startingBoard, currentBoard } = props;
+    const initialColorDict: InitialColorDict = {
+        0: 'transparent',
+        1: palette[0],
+        2: palette[1],
+        3: palette[2],
+        4: palette[3],
+        5: palette[4],
+        6: palette[5],
+        7: palette[6],
+        8: palette[7],
+        9: palette[8]
+    }
     const [color, setColor] = useState<string>('transparent');
     const [opened, { open, close }] = useDisclosure(false);
     const [isInteractable, setIsInteractable] = useState<boolean>(false);
@@ -63,19 +66,8 @@ export function Tile(props: TileProps) {
 
     useEffect(() => {
         // Set the initial color for each tile
-        const initialColorDict: InitialColorDict = {
-            0: 'transparent',
-            1: palette[0],
-            2: palette[1],
-            3: palette[2],
-            4: palette[3],
-            5: palette[4],
-            6: palette[5],
-            7: palette[6],
-            8: palette[7],
-            9: palette[8]
-        }
-        const initialColor: string = initialColorDict[currentBoard[tileIndex]];
+        const tileValue = currentBoard[tileIndex];
+        const initialColor: string = initialColorDict[tileValue];
         setColor(initialColor);
 
         // Set whether or not tile is interactable
@@ -94,6 +86,12 @@ export function Tile(props: TileProps) {
             }, 100);
         }
     }, [startingBoard, palette, tileIndex]);
+
+    useEffect(() => {
+        const tileValue = currentBoard[tileIndex];
+        const newColor = initialColorDict[tileValue];
+        setColor(newColor);
+    }, [currentBoard, tileIndex])
 
     return (
         <Popover width={200} position="bottom" withArrow shadow="md" opened={opened} onClose={close}>
@@ -116,12 +114,12 @@ export function Tile(props: TileProps) {
             </Popover.Target>
             <Popover.Dropdown>
                 <div className="color-option-grid">
-                    {generateColorOptions(props, setColor, close)}
+                    {generateColorOptions(props, close)}
                 </div>
                 <div className="reset-tile-div">
                     <button 
                         className="reset-tile-button"
-                        onClick = {() => resetTile(props, setColor, close)}
+                        onClick = {() => resetTile(props, close)}
                     >
                         Reset
                     </button>
