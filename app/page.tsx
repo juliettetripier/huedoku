@@ -19,6 +19,10 @@ interface BoardsByDifficulty {
   }
 }
 
+interface EmptyTilesDict {
+  [key: string]: number;
+}
+
 function getPuzzleByDifficulty(difficulty: string, 
   setStartingBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
   setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
@@ -55,7 +59,7 @@ export default function Home() {
   const [palette, setPalette] = useState<string[]>([]);
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
-  const [resetButtonDisabled, setResetButtonDisabled] = useState<boolean>(false);
+  const [resetButtonDisabled, setResetButtonDisabled] = useState<boolean>(true);
   const [alertVisible, setAlertVisible] = useState(false);
   const [puzzlesSolved, setPuzzlesSolved] = useState(0);
   const [repeatedTiles, setRepeatedTiles] = useState(new Set<number>());
@@ -115,6 +119,29 @@ export default function Home() {
   }, [boardsByDifficulty, currentDifficulty]);
 
   useEffect(() => {
+    // Check if any tiles are filled out to determine if reset button is active
+    if (currentBoard) {
+      let emptyTiles = 0;
+      const emptyTilesDict: EmptyTilesDict = {
+        'easy': 19,
+        'medium': 28,
+        'hard': 37
+    }
+    const maximumEmptyTiles = emptyTilesDict[currentDifficulty];
+    for (let i = 0; i < currentBoard.length; i++) {
+      if (currentBoard[i] == 0) {
+        emptyTiles += 1;
+      }
+    }
+    if (emptyTiles == maximumEmptyTiles) {
+      setResetButtonDisabled(true);
+    }
+    else {
+      setResetButtonDisabled(false);
+    }
+    };
+
+    // Highlight repeated tiles
     const prevBoard = prevBoardRef.current;
     let changedTileIndex = undefined;
 
@@ -122,7 +149,6 @@ export default function Home() {
       for (let i = 0; i < currentBoard.length; i++) {
         if (currentBoard[i] !== prevBoard[i]) {
           changedTileIndex = i;
-          console.log(`index: ${changedTileIndex}`);
           break;
         }
       }
@@ -133,7 +159,7 @@ export default function Home() {
     if (changedTileIndex) {
       const newRepeatedTiles = checkForRepeatedTiles(currentBoard, changedTileIndex);
       // add changed tile to newRepeatedTiles
-      if (currentBoard[changedTileIndex] !== 0) {
+      if (newRepeatedTiles.size > 0 && currentBoard[changedTileIndex] !== 0) {
         newRepeatedTiles.add(changedTileIndex);
       }
       // check tiles in repeatedTiles

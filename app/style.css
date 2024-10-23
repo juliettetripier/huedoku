@@ -50,7 +50,7 @@ main {
   }
 
   .tile-repeated {
-    border: 7px solid !important;
+    border: 5px solid black;
   }
 
   .tile-corner {

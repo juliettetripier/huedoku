@@ -1,7 +1,6 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
 import React from 'react';
-import { reset } from 'canvas-confetti';
 
 interface BoardsByDifficulty {
     [difficulty: string]: {
