@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import React, { Dispatch, SetStateAction, useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { ColorOption } from './coloroption';
 import { updateBoard } from '../features/validateSolution';
+import checkForRepeatedTiles from '../features/checkForRepeatedTile';
 
 export type TileProps = {
     tileIndex: number;
@@ -10,6 +11,7 @@ export type TileProps = {
     currentBoard: Array<number>;
     setCurrentBoard: Dispatch<SetStateAction<Array<number>>>;
     startingBoard: Array<number>;
+    repeatedTiles: Set<number>;
 }
 
 interface InitialColorDict {
@@ -46,7 +48,7 @@ function generateColorOptions(props: TileProps, onClose: () => void) {
 
 
 export function Tile(props: TileProps) {
-    const { tileIndex, palette, startingBoard, currentBoard } = props;
+    const { tileIndex, palette, startingBoard, currentBoard, repeatedTiles } = props;
     const initialColorDict: InitialColorDict = {
         0: 'transparent',
         1: palette[0],
@@ -62,6 +64,7 @@ export function Tile(props: TileProps) {
     const [color, setColor] = useState<string>('transparent');
     const [opened, { open, close }] = useDisclosure(false);
     const [isInteractable, setIsInteractable] = useState<boolean>(false);
+    const [isRepeated, setIsRepeated] = useState<boolean>(false);
     const tileRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -88,18 +91,28 @@ export function Tile(props: TileProps) {
     }, [startingBoard, palette, tileIndex]);
 
     useEffect(() => {
+        // Change tile color to match new tile value
         const tileValue = currentBoard[tileIndex];
         const newColor = initialColorDict[tileValue];
         setColor(newColor);
     }, [currentBoard, tileIndex])
+
+    useEffect(() => {
+        if (repeatedTiles.has(tileIndex)) {
+            setIsRepeated(true);
+        }
+        else {
+            setIsRepeated(false);
+        }
+    }, [repeatedTiles])
 
     return (
         <Popover width={200} position="bottom" withArrow shadow="md" opened={opened} onClose={close}>
             <Popover.Target>
                 <div
                     ref={tileRef} 
-                    className={
-                        isInteractable ? 'tile tile-interactable no-transition' : 'tile tile-fixed no-transition'
+                    className={`${isInteractable ? 'tile tile-interactable no-transition' : 'tile tile-fixed no-transition'}
+                        ${isRepeated ? 'tile-repeated' : '' }`
                     } 
                     style={{ backgroundColor: color }} 
                     onClick={isInteractable ? open : undefined}

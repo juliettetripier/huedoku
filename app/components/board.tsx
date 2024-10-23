@@ -14,11 +14,12 @@ function Grid({ children }: GridProps) {
     </div>;
 }
 
-export default function Board({ currentBoard, setCurrentBoard, startingBoard, palette }: {
+export default function Board({ currentBoard, setCurrentBoard, startingBoard, palette, repeatedTiles }: {
     currentBoard: Array<number>, 
     setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
     startingBoard: Array<number>,
-    palette: Array<string> }) {
+    palette: Array<string>,
+    repeatedTiles: Set<number> }) {
 
     function generateTiles(generatedPalette: Array<string>) {
         const tiles = [];
@@ -33,6 +34,7 @@ export default function Board({ currentBoard, setCurrentBoard, startingBoard, pa
                 currentBoard={currentBoard} 
                 setCurrentBoard={setCurrentBoard}
                 startingBoard={startingBoard}
+                repeatedTiles={repeatedTiles}
             />);
         }
     

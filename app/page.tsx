@@ -2,11 +2,12 @@
 
 import Board from "./components/board";
 import "./globals.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
 import SuccessAlert from "./components/successAlert";
 import ResetAllButton from "./components/resetAllButton";
+import checkForRepeatedTiles from "./features/checkForRepeatedTile";
 
 interface BoardsByDifficulty {
   [difficulty: string]: {
@@ -54,8 +55,11 @@ export default function Home() {
   const [palette, setPalette] = useState<string[]>([]);
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
+  const [resetButtonDisabled, setResetButtonDisabled] = useState<boolean>(false);
   const [alertVisible, setAlertVisible] = useState(false);
   const [puzzlesSolved, setPuzzlesSolved] = useState(0);
+  const [repeatedTiles, setRepeatedTiles] = useState(new Set<number>());
+  const prevBoardRef = useRef(currentBoard);
 
   const setNoTransition = () => {
     const tiles = document.querySelectorAll('.tile');
@@ -93,18 +97,59 @@ export default function Home() {
 
   useEffect(() => {
     if (boardsByDifficulty[currentDifficulty] &&
-      boardsByDifficulty[currentDifficulty].solved == true 
-      && boardsByDifficulty[currentDifficulty].previouslySolved == false) {
-        setPuzzlesSolved(prev => prev + 1);
-        setBoardsByDifficulty(prevBoards => ({
-          ...prevBoards,
-          [currentDifficulty]: {
-            ...prevBoards[currentDifficulty],
-            previouslySolved: true,
-          }
-        }));
+      boardsByDifficulty[currentDifficulty].solved == true) {
+        // disable reset button if puzzle is solved
+        setResetButtonDisabled(true);
+        // increment puzzles solved count
+        if (boardsByDifficulty[currentDifficulty].previouslySolved == false) {
+          setPuzzlesSolved(prev => prev + 1);
+          setBoardsByDifficulty(prevBoards => ({
+            ...prevBoards,
+            [currentDifficulty]: {
+              ...prevBoards[currentDifficulty],
+              previouslySolved: true,
+            }
+          }));
+        }
       }
-  }, [boardsByDifficulty, currentDifficulty])
+  }, [boardsByDifficulty, currentDifficulty]);
+
+  useEffect(() => {
+    const prevBoard = prevBoardRef.current;
+    let changedTileIndex = undefined;
+
+    if (prevBoard) {
+      for (let i = 0; i < currentBoard.length; i++) {
+        if (currentBoard[i] !== prevBoard[i]) {
+          changedTileIndex = i;
+          console.log(`index: ${changedTileIndex}`);
+          break;
+        }
+      }
+    }
+    prevBoardRef.current = currentBoard;
+
+    // Check changed tile's row/column/square
+    if (changedTileIndex) {
+      const newRepeatedTiles = checkForRepeatedTiles(currentBoard, changedTileIndex);
+      // add changed tile to newRepeatedTiles
+      if (currentBoard[changedTileIndex] !== 0) {
+        newRepeatedTiles.add(changedTileIndex);
+      }
+      // check tiles in repeatedTiles
+      if (repeatedTiles) {
+        repeatedTiles.forEach((tile: number) => {
+          const checkedRepeatedTiles = checkForRepeatedTiles(currentBoard, tile);
+          if (checkedRepeatedTiles) {
+            checkedRepeatedTiles.forEach((tile: number) => {
+              newRepeatedTiles.add(tile);
+            })
+          }
+        })
+      }
+      setRepeatedTiles(newRepeatedTiles);
+    }
+  }, [currentBoard]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -144,6 +189,8 @@ export default function Home() {
               currentDifficulty={currentDifficulty} 
               boardsByDifficulty={boardsByDifficulty}
               setCurrentBoard={setCurrentBoard}
+              resetButtonDisabled={resetButtonDisabled}
+              setResetButtonDisabled={setResetButtonDisabled}
             />
         </div>
         <div>
@@ -167,6 +214,7 @@ export default function Home() {
           setCurrentBoard={setCurrentBoard}
           startingBoard={startingBoard} 
           palette={palette}
+          repeatedTiles={repeatedTiles}
         />
       </div>
     </main>

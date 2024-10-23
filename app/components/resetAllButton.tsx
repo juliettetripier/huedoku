@@ -1,6 +1,7 @@
 import { useDisclosure } from '@mantine/hooks';
 import { Modal, Button } from '@mantine/core';
 import React from 'react';
+import { reset } from 'canvas-confetti';
 
 interface BoardsByDifficulty {
     [difficulty: string]: {
@@ -12,10 +13,12 @@ interface BoardsByDifficulty {
     }
   }
 
-export default function ResetAllButton({currentDifficulty, boardsByDifficulty, setCurrentBoard}: {
+export default function ResetAllButton({currentDifficulty, boardsByDifficulty, setCurrentBoard, resetButtonDisabled, setResetButtonDisabled}: {
     currentDifficulty: string,
     boardsByDifficulty: BoardsByDifficulty,
     setCurrentBoard: React.Dispatch<React.SetStateAction<number[]>>,
+    resetButtonDisabled: boolean,
+    setResetButtonDisabled: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
     const [opened, { open, close }] = useDisclosure(false);
 
@@ -39,9 +42,12 @@ export default function ResetAllButton({currentDifficulty, boardsByDifficulty, s
                     </Button>
             </Modal>
 
-            <button onClick={open}>
+            <Button 
+                className={resetButtonDisabled ? "disabled" : undefined} 
+                onClick={resetButtonDisabled ? undefined : open}
+            >
                 Reset Tiles
-            </button>
+            </Button>
         </>
     ); 
 }

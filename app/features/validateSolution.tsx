@@ -1,12 +1,5 @@
 import { TileProps } from "../components/tile";
 
-// We need to highlight repeated colors as they're selected
-// Maybe in the board component, where we're currently checking if submittable
-// or maybe in tile component...? would it be more efficient to 
-// specifically check for the tile that was just selected instead
-// of checking the whole board for repeats? 
-
-
 // Update board state when a new color is selected
 export function updateBoard(props: TileProps, value: number) {
     let newBoard: Array<number> = [];

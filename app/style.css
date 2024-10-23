@@ -6,7 +6,8 @@ main {
 }
 
 .disabled {
-  cursor: default;
+  cursor: default !important;
+  pointer-events: none !important;
   opacity: 0.6;
 }
 
@@ -41,6 +42,15 @@ main {
 
   .tile-fixed {
     cursor: default;
+  }
+
+  .tile-solved {
+    cursor: default !important;
+    pointer-events: none !important;
+  }
+
+  .tile-repeated {
+    border: 7px solid !important;
   }
 
   .tile-corner {
