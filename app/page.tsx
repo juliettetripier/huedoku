@@ -168,7 +168,7 @@ export default function Home() {
     prevDifficultyRef.current = currentDifficulty;
 
     // Check changed tile's row/column/square
-    if (changedTileIndex) {
+    if (changedTileIndex !== undefined) {
       const newRepeatedTiles = checkForRepeatedTiles(currentBoard, changedTileIndex);
       // add changed tile to newRepeatedTiles
       if (newRepeatedTiles.size > 0 && currentBoard[changedTileIndex] !== 0) {

@@ -110,8 +110,7 @@ export function Tile(props: TileProps) {
             <Popover.Target>
                 <div
                     ref={tileRef} 
-                    className={`${isInteractable ? 'tile tile-interactable no-transition' : 'tile tile-fixed no-transition'}
-                        ${isRepeated ? 'tile-repeated' : '' }`
+                    className={`${isInteractable ? 'tile tile-interactable no-transition' : 'tile tile-fixed no-transition'}`
                     } 
                     style={{ backgroundColor: color }} 
                     onClick={isInteractable ? open : undefined}
@@ -121,6 +120,12 @@ export function Tile(props: TileProps) {
                         className='tile-corner'
                         style={{ display: isInteractable ? 'block' : 'none' }}
                     >    
+                    </div>
+                    <div 
+                        className='repeated-div'
+                        style={{ display: isRepeated ? 'block flex' : 'none'}}
+                    >
+                        <img src="/images/warning.png" className='repeated-marker'></img>
                     </div>
                 </div>
             </Popover.Target>
