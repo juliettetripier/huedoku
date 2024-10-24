@@ -64,6 +64,7 @@ export default function Home() {
   const [puzzlesSolved, setPuzzlesSolved] = useState(0);
   const [repeatedTiles, setRepeatedTiles] = useState(new Set<number>());
   const prevBoardRef = useRef(currentBoard);
+  const prevDifficultyRef = useRef(currentDifficulty);
 
   const setNoTransition = () => {
     const tiles = document.querySelectorAll('.tile');
@@ -142,10 +143,13 @@ export default function Home() {
     };
 
     // Highlight repeated tiles
+    // Make sure this only runs when the board changes because a tile changes,
+    // not because the difficulty changes
+    const prevDifficulty = prevDifficultyRef.current;
     const prevBoard = prevBoardRef.current;
     let changedTileIndex = undefined;
 
-    if (prevBoard) {
+    if (prevBoard && prevDifficulty === currentDifficulty) {
       for (let i = 0; i < currentBoard.length; i++) {
         if (currentBoard[i] !== prevBoard[i]) {
           changedTileIndex = i;
@@ -153,7 +157,9 @@ export default function Home() {
         }
       }
     }
+
     prevBoardRef.current = currentBoard;
+    prevDifficultyRef.current = currentDifficulty;
 
     // Check changed tile's row/column/square
     if (changedTileIndex) {
@@ -175,7 +181,7 @@ export default function Home() {
       }
       setRepeatedTiles(newRepeatedTiles);
     }
-  }, [currentBoard]);
+  }, [currentBoard, currentDifficulty]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -183,27 +189,30 @@ export default function Home() {
         <h1>Huedoku</h1>
         <div className="difficulty-div">
           <button 
-            className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button': undefined}`}
+            className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button disabled': undefined}`}
             id="easy" 
             onClick={() => {
+              currentDifficulty == 'easy' ? undefined :
               switchDifficulty('easy');
             }} 
           >
             Easy
           </button>
           <button 
-            className={`difficulty-button ${currentDifficulty == 'medium' ? 'selected-button' : undefined}`}
+            className={`difficulty-button ${currentDifficulty == 'medium' ? 'selected-button disabled' : undefined}`}
             id="medium" 
             onClick={() => {
+              currentDifficulty == 'medium' ? undefined :
               switchDifficulty('medium');
             }}
           >
             Medium
           </button>
           <button 
-            className={`difficulty-button ${currentDifficulty == 'hard' ? 'selected-button' : undefined}`}
+            className={`difficulty-button ${currentDifficulty == 'hard' ? 'selected-button disabled' : undefined}`}
             id="hard" 
             onClick={() => {
+              currentDifficulty == 'hard' ? undefined :
               switchDifficulty('hard');
             }}
           >
