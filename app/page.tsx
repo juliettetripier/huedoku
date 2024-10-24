@@ -16,6 +16,7 @@ interface BoardsByDifficulty {
     palette: string[];
     solved: boolean;
     previouslySolved: boolean;
+    repeatedTiles: Set<number>;
   }
 }
 
@@ -28,12 +29,14 @@ function getPuzzleByDifficulty(difficulty: string,
   setCurrentBoard: React.Dispatch<React.SetStateAction<Array<number>>>,
   setPalette: React.Dispatch<React.SetStateAction<string[]>>,
   boardsByDifficulty: BoardsByDifficulty,
-  setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>>
+  setBoardsByDifficulty: React.Dispatch<React.SetStateAction<BoardsByDifficulty>>,
+  setRepeatedTiles: React.Dispatch<React.SetStateAction<Set<number>>>
 ) {
   if (boardsByDifficulty[difficulty]) {
     setStartingBoard(boardsByDifficulty[difficulty]['startingBoard']);
     setCurrentBoard(boardsByDifficulty[difficulty]['currentBoard']);
     setPalette(boardsByDifficulty[difficulty]['palette']);
+    setRepeatedTiles(boardsByDifficulty[difficulty]['repeatedTiles']);
   } else {
     const newPuzzle = generateBoard(difficulty);
     const newPalette = generateColorPalette();
@@ -44,12 +47,14 @@ function getPuzzleByDifficulty(difficulty: string,
         'currentBoard': newPuzzle,
         'palette': newPalette,
         'solved': false,
-        'previouslySolved': false
+        'previouslySolved': false,
+        'repeatedTiles': new Set(),
       }
     }));
     setStartingBoard(newPuzzle);
     setCurrentBoard(newPuzzle);
     setPalette(newPalette);
+    setRepeatedTiles(new Set());
   }
 }
 
@@ -78,7 +83,8 @@ export default function Home() {
       ...prevState, 
       [currentDifficulty]: {
         ...prevState[currentDifficulty],
-        'currentBoard': currentBoard
+        'currentBoard': currentBoard,
+        'repeatedTiles': repeatedTiles
       }
     }));
   }
@@ -89,7 +95,7 @@ export default function Home() {
     setNoTransition();
     const newDifficulty = difficulty;
     setCurrentDifficulty(newDifficulty);
-    getPuzzleByDifficulty(newDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
+    getPuzzleByDifficulty(newDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty, setRepeatedTiles);
     if (boardsByDifficulty[newDifficulty] && 
       boardsByDifficulty[newDifficulty].solved) {
       setAlertVisible(true);
@@ -97,7 +103,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty);
+    getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty, setRepeatedTiles);
   }, []);
 
   useEffect(() => {

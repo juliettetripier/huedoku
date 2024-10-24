@@ -13,6 +13,7 @@ interface BoardsByDifficulty {
       palette: string[];
       solved: boolean;
       previouslySolved: boolean;
+      repeatedTiles: Set<number>;
     }
 }
 
@@ -36,7 +37,8 @@ function getNewPuzzle(difficulty: string,
             'currentBoard': newBoard,
             'palette': newPalette,
             'solved': false,
-            'previouslySolved': false
+            'previouslySolved': false,
+            'repeatedTiles': new Set(),
         }
     }));
 }
