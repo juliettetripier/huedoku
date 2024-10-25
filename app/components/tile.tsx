@@ -4,6 +4,21 @@ import React, { Dispatch, SetStateAction, useState, useEffect, useRef } from 're
 import { ColorOption } from './coloroption';
 import { updateBoard } from '../features/validateSolution';
 
+interface BoardsByDifficulty {
+    [difficulty: string]: {
+      startingBoard: number[];
+      currentBoard: number[];
+      palette: string[];
+      solved: boolean;
+      previouslySolved: boolean;
+      repeatedTiles: Set<number>;
+    }
+}
+
+interface InitialColorDict {
+    [key: number]: string;
+}
+
 export type TileProps = {
     tileIndex: number;
     palette: Array<string>;
@@ -11,17 +26,15 @@ export type TileProps = {
     setCurrentBoard: Dispatch<SetStateAction<Array<number>>>;
     startingBoard: Array<number>;
     repeatedTiles: Set<number>;
-}
-
-interface InitialColorDict {
-    [key: number]: string;
+    boardsByDifficulty: BoardsByDifficulty;
+    currentDifficulty: string;
 }
 
 
 function resetTile(props: TileProps, onClose: () => void) {
     updateBoard(props, 0);
     onClose();
-    }
+}
 
 
 function generateColorOptions(props: TileProps, onClose: () => void) {
@@ -47,7 +60,7 @@ function generateColorOptions(props: TileProps, onClose: () => void) {
 
 
 export function Tile(props: TileProps) {
-    const { tileIndex, palette, startingBoard, currentBoard, repeatedTiles } = props;
+    const { tileIndex, palette, startingBoard, currentBoard, repeatedTiles, boardsByDifficulty, currentDifficulty } = props;
     const initialColorDict: InitialColorDict = {
         0: 'transparent',
         1: palette[0],
@@ -104,6 +117,14 @@ export function Tile(props: TileProps) {
             setIsRepeated(false);
         }
     }, [repeatedTiles])
+
+    useEffect(() => {
+        if (boardsByDifficulty[currentDifficulty] && 
+            boardsByDifficulty[currentDifficulty].solved === true) 
+        {
+            setIsInteractable(false);
+        }
+    }, [boardsByDifficulty, currentDifficulty])
 
     return (
         <Popover width={200} position="bottom" withArrow shadow="md" opened={opened} onClose={close}>

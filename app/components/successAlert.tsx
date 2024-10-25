@@ -73,7 +73,7 @@ export default function SuccessAlert({ currentBoard, setCurrentBoard, setStartin
                     ...prevState[difficulty],
                     'solved': true
                 }
-            }))
+            }));
         }
     }, [currentBoard]);
 

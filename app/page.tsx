@@ -256,6 +256,8 @@ export default function Home() {
           startingBoard={startingBoard} 
           palette={palette}
           repeatedTiles={repeatedTiles}
+          boardsByDifficulty={boardsByDifficulty}
+          currentDifficulty={currentDifficulty}
         />
       </div>
     </main>
