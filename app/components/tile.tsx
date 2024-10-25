@@ -146,7 +146,7 @@ export function Tile(props: TileProps) {
                         className='repeated-div'
                         style={{ display: isRepeated ? 'block flex' : 'none'}}
                     >
-                        <img src="./public/images/warning.png" className='repeated-marker'></img>
+                        <img src="./images/warning.png" className='repeated-marker'></img>
                     </div>
                 </div>
             </Popover.Target>
