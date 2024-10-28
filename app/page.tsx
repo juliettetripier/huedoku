@@ -192,7 +192,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="header">
-        <h1>Huedoku</h1>
+        <img src="./images/huedoku.PNG" alt="Huedoku logo"></img>
         <div className="difficulty-div">
           <button 
             className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button disabled': undefined}`}
