@@ -3,23 +3,95 @@ main {
     padding-bottom: 2rem;
     padding-left: 6rem;
     padding-right: 6rem;
+    background-color: white;
 }
+
+
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.huedoku-logo {
+  width: 20rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.difficulty-and-reset-div {
+  display: flex;
+}
+
+.difficulty-div {
+  border: 2px solid whitesmoke;
+  margin-right: 2rem;
+}
+
+.puzzle-solved-div {
+  display: flex;
+}
+
+.puzzles-solved-span {
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+}
+
+.mantine-Alert-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+
 
 .disabled {
   cursor: default !important;
   pointer-events: none !important;
-  opacity: 0.6;
+  opacity: 0.5;
+}
+
+.minimal-button {
+  background-color: black;
+  color: white;
+  border-radius: 0px;
+}
+
+.minimal-button:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+}
+
+.difficulty-button {
+  background-color: white;
+  color: black;
+  border-radius: 0px;
+}
+
+.difficulty-button:hover {
+  background-color: whitesmoke;
+  color: black;
 }
 
 .selected-button {
-  background-color: teal;
-  color: white;
+  background-color: black;
+  color: white; 
+  border-radius: 0px;
+  cursor: default;
+  pointer-events: none;
 }
 
 .main-grid {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
-    gap: 0.3em;
+    gap: 0.1em;
   }
   
   .tile {

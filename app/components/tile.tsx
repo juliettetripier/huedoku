@@ -1,6 +1,7 @@
-import { Popover, Text, Button } from '@mantine/core';
+import { Popover } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React, { Dispatch, SetStateAction, useState, useEffect, useRef } from 'react';
+import { Button } from '@mantine/core';
 import { ColorOption } from './coloroption';
 import { updateBoard } from '../features/validateSolution';
 
@@ -155,12 +156,12 @@ export function Tile(props: TileProps) {
                     {generateColorOptions(props, close)}
                 </div>
                 <div className="reset-tile-div">
-                    <button 
-                        className="reset-tile-button"
+                    <Button 
+                        className="minimal-button reset-tile-button"
                         onClick = {() => resetTile(props, close)}
                     >
                         Reset
-                    </button>
+                    </Button>
                 </div>
             </Popover.Dropdown>
         </Popover>

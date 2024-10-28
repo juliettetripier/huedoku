@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Alert, Button } from "@mantine/core";
 import { IconTrophy } from "@tabler/icons-react";
 import confetti from 'canvas-confetti';
@@ -80,16 +80,18 @@ export default function SuccessAlert({ currentBoard, setCurrentBoard, setStartin
     return <Alert 
             variant="light" 
             color="green" 
-            title="Puzzle Solved!" 
+            title={<div className="alert-header">
+                <span>Puzzle solved!</span>
+                <Button className="new-puzzle-button" onClick = {() => {
+                    setNoTransition();
+                    setAlertVisible(false);
+                    getNewPuzzle(difficulty, setStartingBoard, setPalette, setCurrentBoard, setBoardsByDifficulty)}
+                }>
+                    New puzzle
+                </Button>
+            </div>}
             icon={ icon } 
             style={{ display: alertVisible ? 'block' : 'none' }}
         >
-        <Button onClick = {() => {
-            setNoTransition();
-            setAlertVisible(false);
-            getNewPuzzle(difficulty, setStartingBoard, setPalette, setCurrentBoard, setBoardsByDifficulty)}
-        }>
-            New puzzle
-        </Button>
     </Alert>
 }

@@ -33,16 +33,16 @@ export default function ResetAllButton({currentDifficulty, boardsByDifficulty, s
                 onClose={close} 
                 title="Are you sure you want to reset all tiles?">
                     <p>You will lose your progress.</p>
-                    <Button onClick={resetTiles}>
+                    <Button className="minimal-button" onClick={resetTiles}>
                         Reset Tiles
                     </Button>
-                    <Button onClick={close}>
+                    <Button className="minimal-button" onClick={close}>
                         Cancel
                     </Button>
             </Modal>
 
             <Button 
-                className={resetButtonDisabled ? "disabled" : undefined} 
+                className={resetButtonDisabled ? "minimal-button disabled" : "minimal-button"} 
                 onClick={resetButtonDisabled ? undefined : open}
             >
                 Reset Tiles

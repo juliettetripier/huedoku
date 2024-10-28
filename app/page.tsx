@@ -2,6 +2,7 @@
 
 import Board from "./components/board";
 import "./globals.css";
+import { Button } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
@@ -191,74 +192,79 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="header">
-        <img src="./images/huedoku.PNG" alt="Huedoku logo"></img>
-        <div className="difficulty-div">
-          <button 
-            className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button disabled': undefined}`}
-            id="easy" 
-            onClick={() => {
-              currentDifficulty == 'easy' ? undefined :
-              switchDifficulty('easy');
-            }} 
-          >
-            Easy
-          </button>
-          <button 
-            className={`difficulty-button ${currentDifficulty == 'medium' ? 'selected-button disabled' : undefined}`}
-            id="medium" 
-            onClick={() => {
-              currentDifficulty == 'medium' ? undefined :
-              switchDifficulty('medium');
-            }}
-          >
-            Medium
-          </button>
-          <button 
-            className={`difficulty-button ${currentDifficulty == 'hard' ? 'selected-button disabled' : undefined}`}
-            id="hard" 
-            onClick={() => {
-              currentDifficulty == 'hard' ? undefined :
-              switchDifficulty('hard');
-            }}
-          >
-            Hard
-          </button>
-        </div>
-        <div>
-            <ResetAllButton
-              currentDifficulty={currentDifficulty} 
-              boardsByDifficulty={boardsByDifficulty}
-              setCurrentBoard={setCurrentBoard}
-              resetButtonDisabled={resetButtonDisabled}
-              setResetButtonDisabled={setResetButtonDisabled}
+      <div className="content-div">
+        <div className="header">
+          <div className="logo-div">
+            <img src="./images/huedoku.PNG" className="huedoku-logo" alt="Huedoku logo"></img>
+          </div>
+          <div className="difficulty-and-reset-div">
+            <div className="difficulty-div">
+              <Button 
+                className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button': undefined}`}
+                id="easy" 
+                onClick={() => {
+                  currentDifficulty == 'easy' ? undefined :
+                  switchDifficulty('easy');
+                }} 
+              >
+                Easy
+              </Button>
+              <Button 
+                className={`difficulty-button ${currentDifficulty == 'medium' ? 'selected-button' : undefined}`}
+                id="medium" 
+                onClick={() => {
+                  currentDifficulty == 'medium' ? undefined :
+                  switchDifficulty('medium');
+                }}
+              >
+                Medium
+              </Button>
+              <Button 
+                className={`difficulty-button ${currentDifficulty == 'hard' ? 'selected-button' : undefined}`}
+                id="hard" 
+                onClick={() => {
+                  currentDifficulty == 'hard' ? undefined :
+                  switchDifficulty('hard');
+                }}
+              >
+                Hard
+              </Button>
+            </div>
+            <div className="reset-button-div">
+              <ResetAllButton
+                currentDifficulty={currentDifficulty} 
+                boardsByDifficulty={boardsByDifficulty}
+                setCurrentBoard={setCurrentBoard}
+                resetButtonDisabled={resetButtonDisabled}
+                setResetButtonDisabled={setResetButtonDisabled}
+              />
+            </div>
+          </div>
+          <div className="puzzle-solved-div">
+            <span className="puzzles-solved-span">Puzzles Solved: { puzzlesSolved }</span>
+            <SuccessAlert 
+              currentBoard={currentBoard}
+              setCurrentBoard={setCurrentBoard} 
+              setStartingBoard={setStartingBoard}
+              setPalette={setPalette}
+              difficulty={currentDifficulty}
+              setBoardsByDifficulty={setBoardsByDifficulty}
+              alertVisible={alertVisible}
+              setAlertVisible={setAlertVisible}
             />
+          </div>
         </div>
         <div>
-          <SuccessAlert 
-            currentBoard={currentBoard}
-            setCurrentBoard={setCurrentBoard} 
-            setStartingBoard={setStartingBoard}
-            setPalette={setPalette}
-            difficulty={currentDifficulty}
-            setBoardsByDifficulty={setBoardsByDifficulty}
-            alertVisible={alertVisible}
-            setAlertVisible={setAlertVisible}
+          <Board 
+            currentBoard={currentBoard} 
+            setCurrentBoard={setCurrentBoard}
+            startingBoard={startingBoard} 
+            palette={palette}
+            repeatedTiles={repeatedTiles}
+            boardsByDifficulty={boardsByDifficulty}
+            currentDifficulty={currentDifficulty}
           />
-          <span>Puzzles Solved: { puzzlesSolved }</span>
         </div>
-      </div>
-
-      <div>
-        <Board 
-          currentBoard={currentBoard} 
-          setCurrentBoard={setCurrentBoard}
-          startingBoard={startingBoard} 
-          palette={palette}
-          repeatedTiles={repeatedTiles}
-          boardsByDifficulty={boardsByDifficulty}
-          currentDifficulty={currentDifficulty}
-        />
       </div>
     </main>
   );
