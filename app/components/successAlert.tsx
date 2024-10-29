@@ -81,8 +81,8 @@ export default function SuccessAlert({ currentBoard, setCurrentBoard, setStartin
             variant="light" 
             color="green" 
             title={<div className="alert-header">
-                <span>Puzzle solved!</span>
-                <Button className="new-puzzle-button" onClick = {() => {
+                <span>Solved!</span>
+                <Button className="minimal-button new-puzzle-button" onClick = {() => {
                     setNoTransition();
                     setAlertVisible(false);
                     getNewPuzzle(difficulty, setStartingBoard, setPalette, setCurrentBoard, setBoardsByDifficulty)}

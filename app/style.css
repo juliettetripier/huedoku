@@ -14,29 +14,40 @@ main {
   flex-direction: column;
 }
 
-.huedoku-logo {
-  width: 20rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+.header-top-row {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 1.1rem;
 }
 
-.difficulty-and-reset-div {
+.huedoku-logo {
+  width: 20rem;
+}
+
+.help-div {
+  margin-left: auto;
+}
+
+.help-icon {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.header-bottom-row {
   display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.3rem;
 }
 
 .difficulty-div {
   border: 2px solid whitesmoke;
-  margin-right: 2rem;
+  flex-basis: 37%;
 }
 
 .puzzle-solved-div {
   display: flex;
-}
-
-.puzzles-solved-span {
-  font-weight: 600;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  flex-basis: 20%;
 }
 
 .alert-header {
@@ -44,9 +55,18 @@ main {
   align-items: center;
 }
 
+.mantine-Alert-root {
+  padding: 0px;
+}
+
 .mantine-Alert-wrapper {
   display: flex;
   align-items: center;
+}
+
+.reset-button-div{
+  /* margin-left: auto; */
+  flex-basis: 10%;
 }
 
 

@@ -103,6 +103,24 @@ export default function Home() {
     }
   }
 
+  const helpOnHover = () => {
+    const blackIcon = document.getElementById('help-icon-black');
+    const whiteIcon = document.getElementById('help-icon-white');
+    if (blackIcon && whiteIcon) {
+      blackIcon.style.display = 'none';
+      whiteIcon.style.display = 'block';
+    }
+  }
+
+  const helpOnLeave = () => {
+    const blackIcon = document.getElementById('help-icon-black');
+    const whiteIcon = document.getElementById('help-icon-white');
+    if (blackIcon && whiteIcon) {
+      blackIcon.style.display = 'block';
+      whiteIcon.style.display = 'none';
+    }
+  }
+
   useEffect(() => {
     getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty, setRepeatedTiles);
   }, []);
@@ -194,10 +212,14 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="content-div">
         <div className="header">
-          <div className="logo-div">
+          <div className="header-top-row">
             <img src="./images/huedoku.PNG" className="huedoku-logo" alt="Huedoku logo"></img>
+            <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
+              <img src="./images/help-black.png" className="help-icon" id="help-icon-black" alt="Black question mark icon"></img>
+              <img src="./images/help-white.png" className="help-icon" id="help-icon-white" style={{ display: "none" }} alt="White question mark icon"></img>
+            </div>
           </div>
-          <div className="difficulty-and-reset-div">
+          <div className="header-bottom-row">
             <div className="difficulty-div">
               <Button 
                 className={`difficulty-button ${currentDifficulty == 'easy' ? 'selected-button': undefined}`}
@@ -230,6 +252,18 @@ export default function Home() {
                 Hard
               </Button>
             </div>
+            <div className="puzzle-solved-div">
+              <SuccessAlert 
+                currentBoard={currentBoard}
+                setCurrentBoard={setCurrentBoard} 
+                setStartingBoard={setStartingBoard}
+                setPalette={setPalette}
+                difficulty={currentDifficulty}
+                setBoardsByDifficulty={setBoardsByDifficulty}
+                alertVisible={alertVisible}
+                setAlertVisible={setAlertVisible}
+              />
+            </div>
             <div className="reset-button-div">
               <ResetAllButton
                 currentDifficulty={currentDifficulty} 
@@ -240,7 +274,7 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="puzzle-solved-div">
+          {/* <div className="puzzle-solved-div">
             <span className="puzzles-solved-span">Puzzles Solved: { puzzlesSolved }</span>
             <SuccessAlert 
               currentBoard={currentBoard}
@@ -252,7 +286,7 @@ export default function Home() {
               alertVisible={alertVisible}
               setAlertVisible={setAlertVisible}
             />
-          </div>
+          </div> */}
         </div>
         <div>
           <Board 
