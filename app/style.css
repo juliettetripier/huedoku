@@ -17,11 +17,11 @@ main {
 .header-top-row {
   display: flex;
   align-items: baseline;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
 }
 
 .huedoku-logo {
-  width: 20rem;
+  width: 12rem;
 }
 
 .help-div {
@@ -37,7 +37,7 @@ main {
 .header-bottom-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1.3rem;
+  margin-bottom: 1rem;
 }
 
 .difficulty-div {
@@ -64,9 +64,23 @@ main {
   align-items: center;
 }
 
-.reset-button-div{
+.reset-button-div {
   /* margin-left: auto; */
   flex-basis: 10%;
+}
+
+.mantine-Modal-content {
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.reset-confirmation-div {
+  margin-top: 1rem;
+}
+
+.reset-confirmation-button:first-child {
+  margin-right: 0.5rem;
 }
 
 
@@ -80,19 +94,19 @@ main {
 .minimal-button {
   background-color: black;
   color: white;
-  border-radius: 0px;
+  border: 2px solid black;
+  border-radius: 8px;
 }
 
 .minimal-button:hover {
   background-color: white;
   color: black;
-  border: 2px solid black;
 }
 
 .difficulty-button {
   background-color: white;
   color: black;
-  border-radius: 0px;
+  border-radius: 8px;
 }
 
 .difficulty-button:hover {
@@ -103,7 +117,7 @@ main {
 .selected-button {
   background-color: black;
   color: white; 
-  border-radius: 0px;
+  border-radius: 8px;
   cursor: default;
   pointer-events: none;
 }
@@ -167,10 +181,15 @@ main {
   .color-option-grid {
     display: grid;
     grid-template-columns: auto auto auto;
-    gap: 0.5em;
+    gap: 0.3em;
   }
   
   .color-option {
     width: 50px;
     height: 50px;
+    border-radius: 8px;
+  }
+
+  .reset-tile-button {
+    margin-top: 0.5rem;
   }
