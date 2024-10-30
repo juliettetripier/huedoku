@@ -125,18 +125,60 @@ main {
 .main-grid {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
-    gap: 0.1em;
   }
   
   .tile {
     position: relative;
-    border: 3px solid black;
-    border-radius: 8px;
-    width: 70px;
-    height: 70px;
+    border: .07rem solid black;
+    width: 4.5rem;
+    height: 4.5rem;
     -webkit-transition: background-color 300ms linear;
     -ms-transition: background-color 300ms linear;
     transition: background-color 300ms linear;
+  }
+
+  /* Outline each 3x3 grid within the 9x9 */
+  .tile:nth-child(9n+1) {
+    border-left: .34rem solid black;;
+  }
+  .tile:nth-child(9n+4),
+  .tile:nth-child(9n+7) {
+    border-left: .17rem solid black;
+  }
+  .tile:nth-child(9n) {
+    border-right: .34rem solid black;
+  }
+  .tile:nth-child(9n+3),
+  .tile:nth-child(9n+6) {
+    border-right: .17rem solid black;
+  }
+  .tile:nth-child(-n+9) {
+    border-top: .34rem solid black;
+  }
+  .tile:nth-child(n+28):nth-child(-n+36),
+  .tile:nth-child(n+55):nth-child(-n+63) {
+    border-top: .17rem solid black;
+  } 
+  .tile:nth-child(n+73) {
+    border-bottom: .34rem solid black;
+  }
+  .tile:nth-child(n+19):nth-child(-n+27),
+  .tile:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: .17rem solid black;
+  }
+
+  /* Round corners of board */
+  .tile:nth-child(1) {
+    border-top-left-radius: 8px;
+  }
+  .tile:nth-child(9) {
+    border-top-right-radius: 8px;
+  }
+  .tile:nth-child(73) {
+    border-bottom-left-radius: 8px;
+  }
+  .tile:nth-child(81) {
+    border-bottom-right-radius: 8px;
   }
 
   .no-transition {
