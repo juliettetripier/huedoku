@@ -16,22 +16,18 @@ main {
 .header-top-row {
   display: flex;
   align-items: baseline;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .huedoku-logo {
   width: 12rem;
 }
 
-.help-div {
+.score-counter {
   margin-left: auto;
+  font-weight: 500;
 }
 
-.help-icon {
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-}
 
 .header-bottom-row {
   display: flex;
@@ -46,10 +42,21 @@ main {
 
 .new-puzzle-reset-div {
   margin-left: auto;
+  display: flex;
 }
 
 .new-puzzle-button {
   margin-left: 0.5rem;
+}
+
+.help-div {
+  margin-left: 0.3rem;
+}
+
+.help-icon {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
 }
 
 .mantine-Modal-content {
@@ -80,6 +87,8 @@ main {
 
 .mantine-Button-root {
   --button-height: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .minimal-button {
