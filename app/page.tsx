@@ -211,6 +211,7 @@ export default function Home() {
         <div className="header">
           <div className="header-top-row">
             <img src="./images/huedoku.PNG" className="huedoku-logo" alt="Huedoku logo"></img>
+            <span className="score-counter">Score: { puzzlesSolved }</span>
             <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
               <img src="./images/help-black.png" className="help-icon" id="help-icon-black" style={{ display: "none" }} alt="Black question mark icon"></img>
               <img src="./images/help-white.png" className="help-icon" id="help-icon-white" alt="White question mark icon"></img>

@@ -33,11 +33,11 @@ export default function ResetAllButton({currentDifficulty, boardsByDifficulty, s
                 onClose={close} 
                 title="Are you sure you want to reset all tiles?">
                     <p>You will lose your progress.</p>
-                    <div className="reset-confirmation-div">
-                        <Button className="minimal-button reset-confirmation-button" onClick={resetTiles}>
+                    <div className="confirmation-div">
+                        <Button className="minimal-button confirmation-button" onClick={resetTiles}>
                             Reset Tiles
                         </Button>
-                        <Button variant="filled" color="red" className="reset-confirmation-button" onClick={close}>
+                        <Button variant="filled" color="red" className="confirmation-button" onClick={close}>
                             Cancel
                         </Button>
                     </div>

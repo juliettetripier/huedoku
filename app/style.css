@@ -58,11 +58,15 @@ main {
   padding-right: 0.5rem;
 }
 
-.reset-confirmation-div {
+.confirmation-div {
   margin-top: 1rem;
 }
 
-.reset-confirmation-button:first-child {
+.confirmation-button {
+  border-radius: 8px;
+}
+
+.confirmation-button:first-child {
   margin-right: 0.5rem;
 }
 
