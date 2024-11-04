@@ -6,7 +6,7 @@ import { Button } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
-import SuccessAlert from "./components/successAlert";
+import NewPuzzleButton from "./components/newPuzzleButton";
 import ResetAllButton from "./components/resetAllButton";
 import checkForRepeatedTiles from "./features/checkForRepeatedTile";
 
@@ -66,7 +66,6 @@ export default function Home() {
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
   const [resetButtonDisabled, setResetButtonDisabled] = useState<boolean>(true);
-  const [alertVisible, setAlertVisible] = useState(false);
   const [puzzlesSolved, setPuzzlesSolved] = useState(0);
   const [repeatedTiles, setRepeatedTiles] = useState(new Set<number>());
   const prevBoardRef = useRef(currentBoard);
@@ -91,7 +90,6 @@ export default function Home() {
   }
 
   const switchDifficulty = (difficulty: string) => {
-    setAlertVisible(false);
     updateBoardsByDifficulty();
     setNoTransition();
     const newDifficulty = difficulty;
@@ -99,7 +97,6 @@ export default function Home() {
     getPuzzleByDifficulty(newDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty, setRepeatedTiles);
     if (boardsByDifficulty[newDifficulty] && 
       boardsByDifficulty[newDifficulty].solved) {
-      setAlertVisible(true);
     }
   }
 
@@ -107,8 +104,8 @@ export default function Home() {
     const blackIcon = document.getElementById('help-icon-black');
     const whiteIcon = document.getElementById('help-icon-white');
     if (blackIcon && whiteIcon) {
-      blackIcon.style.display = 'none';
-      whiteIcon.style.display = 'block';
+      blackIcon.style.display = 'block';
+      whiteIcon.style.display = 'none';
     }
   }
 
@@ -116,8 +113,8 @@ export default function Home() {
     const blackIcon = document.getElementById('help-icon-black');
     const whiteIcon = document.getElementById('help-icon-white');
     if (blackIcon && whiteIcon) {
-      blackIcon.style.display = 'block';
-      whiteIcon.style.display = 'none';
+      blackIcon.style.display = 'none';
+      whiteIcon.style.display = 'block';
     }
   }
 
@@ -215,8 +212,8 @@ export default function Home() {
           <div className="header-top-row">
             <img src="./images/huedoku.PNG" className="huedoku-logo" alt="Huedoku logo"></img>
             <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
-              <img src="./images/help-black.png" className="help-icon" id="help-icon-black" alt="Black question mark icon"></img>
-              <img src="./images/help-white.png" className="help-icon" id="help-icon-white" style={{ display: "none" }} alt="White question mark icon"></img>
+              <img src="./images/help-black.png" className="help-icon" id="help-icon-black" style={{ display: "none" }} alt="Black question mark icon"></img>
+              <img src="./images/help-white.png" className="help-icon" id="help-icon-white" alt="White question mark icon"></img>
             </div>
           </div>
           <div className="header-bottom-row">
@@ -252,19 +249,7 @@ export default function Home() {
                 Hard
               </Button>
             </div>
-            <div className="puzzle-solved-div">
-              <SuccessAlert 
-                currentBoard={currentBoard}
-                setCurrentBoard={setCurrentBoard} 
-                setStartingBoard={setStartingBoard}
-                setPalette={setPalette}
-                difficulty={currentDifficulty}
-                setBoardsByDifficulty={setBoardsByDifficulty}
-                alertVisible={alertVisible}
-                setAlertVisible={setAlertVisible}
-              />
-            </div>
-            <div className="reset-button-div">
+            <div className="new-puzzle-reset-div">
               <ResetAllButton
                 currentDifficulty={currentDifficulty} 
                 boardsByDifficulty={boardsByDifficulty}
@@ -272,21 +257,16 @@ export default function Home() {
                 resetButtonDisabled={resetButtonDisabled}
                 setResetButtonDisabled={setResetButtonDisabled}
               />
+              <NewPuzzleButton
+                currentBoard={currentBoard}
+                setCurrentBoard={setCurrentBoard} 
+                setStartingBoard={setStartingBoard}
+                setPalette={setPalette}
+                difficulty={currentDifficulty}
+                setBoardsByDifficulty={setBoardsByDifficulty}
+              />
             </div>
           </div>
-          {/* <div className="puzzle-solved-div">
-            <span className="puzzles-solved-span">Puzzles Solved: { puzzlesSolved }</span>
-            <SuccessAlert 
-              currentBoard={currentBoard}
-              setCurrentBoard={setCurrentBoard} 
-              setStartingBoard={setStartingBoard}
-              setPalette={setPalette}
-              difficulty={currentDifficulty}
-              setBoardsByDifficulty={setBoardsByDifficulty}
-              alertVisible={alertVisible}
-              setAlertVisible={setAlertVisible}
-            />
-          </div> */}
         </div>
         <div>
           <Board 

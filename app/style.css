@@ -8,7 +8,6 @@ main {
 
 
 
-
 .header {
   display: flex;
   flex-direction: column;
@@ -36,37 +35,21 @@ main {
 
 .header-bottom-row {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
 }
 
 .difficulty-div {
   border: 2px solid whitesmoke;
-  flex-basis: 37%;
+  border-radius: 8px;
 }
 
-.puzzle-solved-div {
-  display: flex;
-  flex-basis: 20%;
+.new-puzzle-reset-div {
+  margin-left: auto;
 }
 
-.alert-header {
-  display: flex;
-  align-items: center;
-}
-
-.mantine-Alert-root {
-  padding: 0px;
-}
-
-.mantine-Alert-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-.reset-button-div {
-  /* margin-left: auto; */
-  flex-basis: 10%;
+.new-puzzle-button {
+  margin-left: 0.5rem;
 }
 
 .mantine-Modal-content {
@@ -91,14 +74,30 @@ main {
   opacity: 0.5;
 }
 
+.mantine-Button-root {
+  --button-height: 2rem;
+}
+
 .minimal-button {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+.minimal-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.filled-button {
   background-color: black;
   color: white;
   border: 2px solid black;
   border-radius: 8px;
 }
 
-.minimal-button:hover {
+.filled-button:hover {
   background-color: white;
   color: black;
 }
