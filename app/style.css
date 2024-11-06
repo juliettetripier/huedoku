@@ -59,10 +59,16 @@ main {
   cursor: pointer;
 }
 
+.tutorial-modal h2 {
+  font-weight: 700;
+ }
+
 .mantine-Modal-content {
-  padding-top: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0.5rem;
+}
+
+.mantine-Modal-content p {
+  margin-bottom: 1rem;
 }
 
 .confirmation-div {

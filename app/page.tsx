@@ -2,7 +2,8 @@
 
 import Board from "./components/board";
 import "./globals.css";
-import { Button } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import React, { useState, useEffect, useRef } from "react";
 import generateBoard from "./features/generateBoard";
 import generateColorPalette from "./features/generateColorPalette";
@@ -70,6 +71,8 @@ export default function Home() {
   const [repeatedTiles, setRepeatedTiles] = useState(new Set<number>());
   const prevBoardRef = useRef(currentBoard);
   const prevDifficultyRef = useRef(currentDifficulty);
+
+  const [opened, { open, close }] = useDisclosure(false);
 
   const setNoTransition = () => {
     const tiles = document.querySelectorAll('.tile');
@@ -210,12 +213,8 @@ export default function Home() {
       <div className="content-div">
         <div className="header">
           <div className="header-top-row">
-            <img src="./images/huedoku.PNG" className="huedoku-logo" alt="Huedoku logo"></img>
+            <img src="./images/huedoku2.PNG" className="huedoku-logo" alt="Huedoku logo"></img>
             <span className="score-counter">Score: { puzzlesSolved }</span>
-            {/* <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
-              <img src="./images/help-black.png" className="help-icon" id="help-icon-black" style={{ display: "none" }} alt="Black question mark icon"></img>
-              <img src="./images/help-white.png" className="help-icon" id="help-icon-white" alt="White question mark icon"></img>
-            </div> */}
           </div>
           <div className="header-bottom-row">
             <div className="difficulty-div">
@@ -266,9 +265,27 @@ export default function Home() {
                 difficulty={currentDifficulty}
                 setBoardsByDifficulty={setBoardsByDifficulty}
               />
+              <Modal opened={opened}
+                onClose={close}
+                title="How To Play Huedoku"
+                className="tutorial-modal">
+                <p>Fill each blank tile on the board by clicking on them and selecting a color from the pop-up menu.</p>
+                <p>Each row, column, and 3x3 square must contain 9 unique colors.</p>
+                <p>A color cannot appear more than once in a given row/column/3x3 square.</p>
+                <p>Complete the puzzle by filling the board!</p>
+              </Modal>
               <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
-                <img src="./images/help-black.png" className="help-icon" id="help-icon-black" style={{ display: "none" }} alt="Black question mark icon"></img>
-                <img src="./images/help-white.png" className="help-icon" id="help-icon-white" alt="White question mark icon"></img>
+                <img src="./images/help-black.png" 
+                  className="help-icon" 
+                  id="help-icon-black" 
+                  style={{ display: "none" }} 
+                  alt="Black question mark icon"
+                  onClick={()=>{open()}}></img>
+                <img src="./images/help-white.png" 
+                  className="help-icon" 
+                  id="help-icon-white" 
+                  alt="White question mark icon"
+                  onClick={()=>{open()}}></img>
             </div>
             </div>
           </div>
