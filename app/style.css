@@ -41,6 +41,10 @@ main {
   border-radius: 8px;
 }
 
+.difficulty-dropdown {
+  display: none;
+}
+
 .new-puzzle-reset-div {
   margin-left: auto;
   display: flex;
@@ -253,4 +257,44 @@ main {
 
   .reset-tile-button {
     margin-top: 0.5rem;
+  }
+
+  /* Mobile layout */
+  @media (max-width: 700px) {
+
+    main {
+      padding: 2rem;
+    }
+
+    .content-div {
+      width: 100%;
+    }
+
+    .main-grid {
+      grid-template-columns: repeat(9, 1fr);
+      width: 100%;
+    }
+
+    .tile {
+      width: 100%;
+      height: auto;
+      padding-bottom: 100%;
+    }
+
+    .tile-corner {
+      position: absolute;
+      border-width: 0 0 15px 15px;
+    }
+
+    .new-puzzle-reset-div {
+      display: none;
+    }
+    
+    .difficulty-div {
+      display: none;
+    }
+
+    .difficulty-dropdown {
+      display: inline-block;
+    }
   }

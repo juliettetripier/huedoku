@@ -2,7 +2,7 @@
 
 import Board from "./components/board";
 import "./globals.css";
-import { Button, Modal } from "@mantine/core";
+import { Button, Modal, Select } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React, { useState, useEffect, useRef } from "react";
 import generateBoard from "./features/generateBoard";
@@ -65,6 +65,7 @@ export default function Home() {
   const [startingBoard, setStartingBoard] = useState(currentBoard);
   const [palette, setPalette] = useState<string[]>([]);
   const [currentDifficulty, setCurrentDifficulty] = useState<string>("easy");
+  const [difficultyDropdownValue, setDifficultyDropdownValue] = useState<string|null>('easy');
   const [boardsByDifficulty, setBoardsByDifficulty] = useState<BoardsByDifficulty>({});
   const [resetButtonDisabled, setResetButtonDisabled] = useState<boolean>(true);
   const [puzzlesSolved, setPuzzlesSolved] = useState(0);
@@ -124,6 +125,12 @@ export default function Home() {
   useEffect(() => {
     getPuzzleByDifficulty(currentDifficulty, setStartingBoard, setCurrentBoard, setPalette, boardsByDifficulty, setBoardsByDifficulty, setRepeatedTiles);
   }, []);
+
+  useEffect(() => {
+    if (difficultyDropdownValue!== null && difficultyDropdownValue !== currentDifficulty) {
+      switchDifficulty(difficultyDropdownValue);
+    }
+  }, [difficultyDropdownValue]);
 
   useEffect(() => {
     if (boardsByDifficulty[currentDifficulty] &&
@@ -248,6 +255,16 @@ export default function Home() {
               >
                 Hard
               </Button>
+            </div>
+            <div className="difficulty-dropdown">
+              <Select 
+                checkIconPosition="right"
+                value={difficultyDropdownValue}
+                data={['easy', 'medium', 'hard']}
+                defaultValue='easy'
+                allowDeselect={false}
+                onChange={setDifficultyDropdownValue}
+              ></Select>
             </div>
             <div className="new-puzzle-reset-div">
               <ResetAllButton
