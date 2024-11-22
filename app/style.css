@@ -312,6 +312,10 @@ main {
       font-weight: 600;
     }
 
+    .mantine-Select-option {
+      font-weight: 600;
+    }
+
     .help-div-mobile {
       display: inline-block;
       margin-left: auto;
