@@ -333,3 +333,38 @@ main {
     }
 
   }
+
+  @media (max-width: 550px) {
+    .tile {
+      border: 0.06rem black solid;
+    }
+    
+    .tile:nth-child(9n+1) {
+      border-left: .2rem solid black;;
+    }
+    .tile:nth-child(9n+4),
+    .tile:nth-child(9n+7) {
+      border-left: .1rem solid black;
+    }
+    .tile:nth-child(9n) {
+      border-right: .2rem solid black;
+    }
+    .tile:nth-child(9n+3),
+    .tile:nth-child(9n+6) {
+      border-right: .1rem solid black;
+    }
+    .tile:nth-child(-n+9) {
+      border-top: .2rem solid black;
+    }
+    .tile:nth-child(n+28):nth-child(-n+36),
+    .tile:nth-child(n+55):nth-child(-n+63) {
+      border-top: .1rem solid black;
+    } 
+    .tile:nth-child(n+73) {
+      border-bottom: .2rem solid black;
+    }
+    .tile:nth-child(n+19):nth-child(-n+27),
+    .tile:nth-child(n+46):nth-child(-n+54) {
+      border-bottom: .1rem solid black;
+    }
+  }
