@@ -260,11 +260,39 @@ export default function Home() {
               <Select 
                 checkIconPosition="right"
                 value={difficultyDropdownValue}
-                data={['easy', 'medium', 'hard']}
+                data={[
+                  {value: 'easy', label: 'Easy'},
+                  {value: 'medium', label: 'Medium'},
+                  {value: 'hard', label: 'Hard'},
+                ]}
                 defaultValue='easy'
                 allowDeselect={false}
                 onChange={setDifficultyDropdownValue}
               ></Select>
+            </div>
+            <div className="help-div-mobile">
+              <Modal opened={opened}
+                onClose={close}
+                title="How To Play Huedoku"
+                className="tutorial-modal">
+                <p>Fill each blank tile on the board by clicking on them and selecting a color from the pop-up menu.</p>
+                <p>Each row, column, and 3x3 square must contain 9 unique colors.</p>
+                <p>A color cannot appear more than once in a given row/column/3x3 square.</p>
+                <p>Complete the puzzle by filling the board!</p>
+              </Modal>
+              <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
+                <img src="./images/help-black.png" 
+                  className="help-icon" 
+                  id="help-icon-black" 
+                  style={{ display: "none" }} 
+                  alt="Black question mark icon"
+                  onClick={()=>{open()}}></img>
+                <img src="./images/help-white.png" 
+                  className="help-icon" 
+                  id="help-icon-white" 
+                  alt="White question mark icon"
+                  onClick={()=>{open()}}></img>
+              </div>
             </div>
             <div className="new-puzzle-reset-div">
               <ResetAllButton
@@ -316,6 +344,23 @@ export default function Home() {
             repeatedTiles={repeatedTiles}
             boardsByDifficulty={boardsByDifficulty}
             currentDifficulty={currentDifficulty}
+          />
+        </div>
+        <div className="new-puzzle-reset-div-mobile">
+          <ResetAllButton
+            currentDifficulty={currentDifficulty} 
+            boardsByDifficulty={boardsByDifficulty}
+            setCurrentBoard={setCurrentBoard}
+            resetButtonDisabled={resetButtonDisabled}
+            setResetButtonDisabled={setResetButtonDisabled}
+          />
+          <NewPuzzleButton
+            currentBoard={currentBoard}
+            setCurrentBoard={setCurrentBoard} 
+            setStartingBoard={setStartingBoard}
+            setPalette={setPalette}
+            difficulty={currentDifficulty}
+            setBoardsByDifficulty={setBoardsByDifficulty}
           />
         </div>
       </div>

@@ -50,12 +50,20 @@ main {
   display: flex;
 }
 
+.new-puzzle-reset-div-mobile {
+  display: none;
+}
+
 .new-puzzle-button {
   margin-left: 0.5rem;
 }
 
 .help-div {
   margin-left: 0.3rem;
+}
+
+.help-div-mobile {
+  display: none;
 }
 
 .help-icon {
@@ -289,7 +297,7 @@ main {
     .new-puzzle-reset-div {
       display: none;
     }
-    
+
     .difficulty-div {
       display: none;
     }
@@ -297,4 +305,27 @@ main {
     .difficulty-dropdown {
       display: inline-block;
     }
+
+    .mantine-Select-input {
+      border: 2px solid black;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .help-div-mobile {
+      display: inline-block;
+      margin-left: auto;
+    }
+
+    .new-puzzle-reset-div-mobile {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .new-puzzle-reset-div-mobile>* {
+      width: 50%;
+    }
+
   }
