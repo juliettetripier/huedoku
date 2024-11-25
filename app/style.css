@@ -272,10 +272,17 @@ main {
   }
 
   /* Mobile layout */
+  /* Mobile layout */
+  /* Mobile layout */
+
   @media (max-width: 700px) {
 
     main {
       padding: 1.5rem;
+    }
+
+    .mantine-Modal-content {
+      margin-top: 33vh;
     }
 
     .content-div {
@@ -327,6 +334,10 @@ main {
 
     .tutorial-modal-mobile {
       display: block;
+    }
+
+    .tutorial-modal-mobile .mantine-Modal-content {
+      margin-top: 20vh
     }
 
     .tutorial-modal {
