@@ -82,6 +82,7 @@ main {
 
 .mantine-Modal-content {
   padding: 0.5rem;
+  color: black;
 }
 
 .mantine-Modal-content p {
@@ -325,6 +326,7 @@ main {
 
     .mantine-Select-option {
       font-weight: 600;
+      color: black;
     }
 
     .help-div-mobile {
