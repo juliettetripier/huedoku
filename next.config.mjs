@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // basePath: "/huedoku",
+    basePath: "/huedoku",
     output: "export",
     images: {
         unoptimized: true
