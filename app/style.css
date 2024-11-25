@@ -76,6 +76,10 @@ main {
   font-weight: 700;
  }
 
+.tutorial-modal-mobile {
+  display: none;
+}
+
 .mantine-Modal-content {
   padding: 0.5rem;
 }
@@ -319,6 +323,14 @@ main {
     .help-div-mobile {
       display: inline-block;
       margin-left: auto;
+    }
+
+    .tutorial-modal-mobile {
+      display: block;
+    }
+
+    .tutorial-modal {
+      display: none;
     }
 
     .new-puzzle-reset-div-mobile {

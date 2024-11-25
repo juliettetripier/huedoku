@@ -274,7 +274,7 @@ export default function Home() {
               <Modal opened={opened}
                 onClose={close}
                 title="How To Play Huedoku"
-                className="tutorial-modal">
+                className="tutorial-modal-mobile">
                 <p>Fill each blank tile on the board by clicking on them and selecting a color from the pop-up menu.</p>
                 <p>Each row, column, and 3x3 square must contain 9 unique colors.</p>
                 <p>A color cannot appear more than once in a given row/column/3x3 square.</p>
@@ -283,7 +283,6 @@ export default function Home() {
               <div className="help-div">
                 <img src="./images/help-white.png" 
                   className="help-icon" 
-                  id="help-icon-white" 
                   alt="White question mark icon"
                   onClick={()=>{open()}}></img>
               </div>
@@ -313,7 +312,10 @@ export default function Home() {
                 <p>A color cannot appear more than once in a given row/column/3x3 square.</p>
                 <p>Complete the puzzle by filling the board!</p>
               </Modal>
-              <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
+              <div className="help-div help-div-desktop" 
+                onMouseOver={helpOnHover} 
+                onMouseLeave={helpOnLeave}
+              >
                 <img src="./images/help-black.png" 
                   className="help-icon" 
                   id="help-icon-black" 
