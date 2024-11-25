@@ -280,13 +280,7 @@ export default function Home() {
                 <p>A color cannot appear more than once in a given row/column/3x3 square.</p>
                 <p>Complete the puzzle by filling the board!</p>
               </Modal>
-              <div className="help-div" onMouseOver={helpOnHover} onMouseLeave={helpOnLeave}>
-                <img src="./images/help-black.png" 
-                  className="help-icon" 
-                  id="help-icon-black" 
-                  style={{ display: "none" }} 
-                  alt="Black question mark icon"
-                  onClick={()=>{open()}}></img>
+              <div className="help-div">
                 <img src="./images/help-white.png" 
                   className="help-icon" 
                   id="help-icon-white" 
