@@ -255,6 +255,10 @@ main {
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
   }
+
+  .mantine-Popover-dropdown {
+    border-radius: 8px !important;
+  }
   
   .color-option-grid {
     display: grid;
@@ -351,13 +355,22 @@ main {
       width: fit-content !important;
     }
 
+    .reset-tile-div {
+      display: flex;
+      justify-content: center;
+    }
+
+    .reset-tile-button {
+      width: 50%;
+    }
+
     .color-option-grid {
       grid-template-columns: auto auto auto auto auto auto auto auto auto;
     }
 
     .color-option {
-      width: 2.3rem;
-      height: 2.3rem;
+      width: 7vw;
+      height: 7vw;
     }
 
     .new-puzzle-reset-div-mobile {
