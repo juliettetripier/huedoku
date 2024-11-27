@@ -79,6 +79,7 @@ export function Tile(props: TileProps) {
     const [isInteractable, setIsInteractable] = useState<boolean>(false);
     const [isRepeated, setIsRepeated] = useState<boolean>(false);
     const tileRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState<boolean|null>(null);
 
     useEffect(() => {
         // Set the initial color for each tile
@@ -127,8 +128,27 @@ export function Tile(props: TileProps) {
         }
     }, [boardsByDifficulty, currentDifficulty])
 
+    // Set color picker properties for mobile vs. desktop
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 700);
+        };
+        if (window) {
+            handleResize();
+            window.addEventListener('resize', handleResize);
+            return () => window.removeEventListener('resize', handleResize);
+        }
+    }, []);
+
     return (
-        <Popover width={200} position="bottom" withArrow shadow="md" opened={opened} onClose={close}>
+        <Popover 
+            width={200} 
+            position="bottom" 
+            withArrow 
+            shadow="md" 
+            opened={opened} 
+            onClose={close}
+        >
             <Popover.Target>
                 <div
                     ref={tileRef} 

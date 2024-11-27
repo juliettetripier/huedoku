@@ -272,6 +272,7 @@ main {
     margin-top: 0.5rem;
   }
 
+
   /* Mobile layout */
   /* Mobile layout */
   /* Mobile layout */
@@ -344,6 +345,19 @@ main {
 
     .tutorial-modal {
       display: none;
+    }
+
+    .mantine-Popover-dropdown {
+      width: fit-content !important;
+    }
+
+    .color-option-grid {
+      grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    }
+
+    .color-option {
+      width: 2.3rem;
+      height: 2.3rem;
     }
 
     .new-puzzle-reset-div-mobile {
